@@ -481,6 +481,7 @@ const DetailComponent = (props) => {
 
 const Detail = (props) => {
   const { match } = props;
+
   const reducer = useSelector((state) => state.reducer);
   const dispatch = useDispatch();
   const methods = useForm();

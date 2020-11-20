@@ -527,17 +527,17 @@ const INITIAL_STATE = {
 
 setAutoFreeze(false);
 
-export default (state = INITIAL_STATE, { type, payload, routeName }) => {
+export default (state = INITIAL_STATE, { type, payload }) => {
   // console.log("state", state);
   switch (type) {
     // case "SET_PAGE_KEY":
-    //   return {
-    //     ...state,
-    //     // pageKey: payload.pageKey,
-    //     // listKey: payload.listKey,
-    //     // match: payload.match,
-    //     page_key: payload.page_key,
-    //   };
+    // return {
+    //   ...state,
+    //   // // pageKey: payload.pageKey,
+    //   // // listKey: payload.listKey,
+    //   // // match: payload.match,
+    //   // page_key: payload.page_key,
+    // };
 
     case "SET_MODAL_OVER_FLOW":
       return { ...state, modalOverflow: payload };

@@ -11,6 +11,7 @@ import Layout from "../../../layout";
 
 // components
 import Breadcrumb from "../../../components/breadcrumb";
+
 import TableHeader from "../../../components/table-headerV2";
 import Table from "../../../components/table";
 import TableFooter from "../../../components/table-footerV2";
@@ -20,7 +21,6 @@ import {
   DatePicker,
   TypeSelectMenu,
 } from "../../../components/table-header-column";
-import { SelectComponent } from "../../../components/table-row-component";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
@@ -60,43 +60,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const HeaderComponent = () => {
-  const [current, setCurrent] = useState(0);
-
-  const menuItems = [
-    {
-      key: "일반회원",
-      value: "client_user",
-    },
-    {
-      key: "사업자회원",
-      value: "business_user",
-    },
-  ];
   return (
-    <SelectComponent
-      isEditable={true}
-      // currentValue={lecture.lecture_department_no}
-      currentValue={current}
-      onChange={(event) => {
-        setCurrent(event.target.value);
-      }}
-      menuItems={menuItems?.map((x) => {
-        return {
-          key: x.key,
-          value: x.value,
-        };
-      })}
-    />
-    // <Typography variant="h6" noWrap color="primary">
-    //   일반회원
-    // </Typography>
+    <Typography variant="h6" noWrap color="primary">
+      검사기록
+    </Typography>
   );
 };
 
 const List = (props) => {
   const { match, location } = props;
-  let currentPath = location.pathname;
-
+  const currentPath = location.pathname;
   const classes = useStyles();
 
   const reducer = useSelector((state) => state.reducer);

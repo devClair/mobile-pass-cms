@@ -4,7 +4,6 @@ import { Route } from "react-router-dom";
 // ui
 // import Layout from "./../../layout/";
 import List from "./list";
-// import Detail from "./detail";
 
 const RoutingContainer = (props) => {
   const { match } = props;

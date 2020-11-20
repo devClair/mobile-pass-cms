@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 // material-ui/core/styles
 import { makeStyles } from "@material-ui/core/styles";
@@ -22,7 +22,10 @@ import { RatioContainer } from "../../components/ratio-container";
 import UserImage from "../../images/layout/user.png";
 
 // react-router-dom
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+
+// clsx
+import clsx from "clsx";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,17 +56,20 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 24,
     paddingBottom: 12,
   },
+  currentPath: {
+    backgroundColor: (props) => theme.palette.primary.light,
+  },
   itemImage: {
     width: 24,
     marginBottom: 12,
   },
-  logoTop: {
-    letterSpacing: "1px",
-  },
-  logoBottom: {
-    letterSpacing: 12,
-    paddingLeft: 13,
-    lineHeight: 1.0,
+  logoContainer: {
+    overflow: "hidden",
+    "& .logoBottom": {
+      lineHeight: 1.0,
+      paddingLeft: 8,
+      letterSpacing: 13,
+    },
   },
 }));
 
@@ -92,8 +98,11 @@ const data = [
 ];
 
 const Sidebar = (props) => {
-  const { drawerWidth } = props;
+  const { drawerWidth, currentPath } = props;
   const classes = useStyles({ drawerWidth: drawerWidth });
+  const history = useHistory();
+  // console.log({ currentPath });
+
   return (
     <Drawer
       className={classes.drawer}
@@ -109,20 +118,15 @@ const Sidebar = (props) => {
         justify="center"
         // alignItems="center"
       >
-        <Grid item>
-          <Typography
-            variant="body1"
-            color="textSecondary"
-            align="center"
-            // className={classes.logoTop}
-          >
+        <Grid item className={classes.logoContainer}>
+          <Typography variant="body1" color="textSecondary" align="center">
             STANDARD
           </Typography>
           <Typography
             variant="body1"
             color="textSecondary"
             align="center"
-            className={classes.logoBottom}
+            className="logoBottom"
           >
             PASS
           </Typography>
@@ -130,33 +134,47 @@ const Sidebar = (props) => {
       </Grid>
       <Divider />
       <List disablePadding>
-        {data.map((x, i) => (
-          <ListItem key={x.key} className={classes.listItem} button>
-            <Grid container alignItems="center" justify="center">
-              <Grid item className={classes.itemImage}>
-                <RatioContainer w={44} h={51}>
-                  <img
-                    src={UserImage}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
-                </RatioContainer>
+        {data.map((x, i) => {
+          return (
+            <ListItem
+              className={clsx(
+                classes.listItem,
+                (x.key === currentPath?.split("/")[1] ||
+                  (currentPath === "/" && i === 0)) &&
+                  classes.currentPath
+              )}
+              button
+              key={x.key}
+              onClick={() => {
+                history.push(`/${x.key}`);
+              }}
+            >
+              <Grid container alignItems="center" justify="center">
+                <Grid item className={classes.itemImage}>
+                  <RatioContainer w={44} h={51}>
+                    <img
+                      src={UserImage}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </RatioContainer>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography
+                    variant="body2"
+                    align="center"
+                    color="textSecondary"
+                  >
+                    {x.label}
+                  </Typography>
+                </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <Typography
-                  variant="body2"
-                  align="center"
-                  color="textSecondary"
-                >
-                  {x.label}
-                </Typography>
-              </Grid>
-            </Grid>
-          </ListItem>
-        ))}
+            </ListItem>
+          );
+        })}
       </List>
     </Drawer>
   );

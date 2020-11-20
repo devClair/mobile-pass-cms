@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Header = (props) => {
-  const { drawerWidth } = props;
+  const { drawerWidth, headerComponent } = props;
   const history = useHistory();
   const classes = useStyles({ drawerWidth: drawerWidth });
 
@@ -70,9 +70,10 @@ const Header = (props) => {
     <AppBar position="fixed" className={classes.appBar} color="transparent">
       <Toolbar>
         <Grid container justify="space-between" className="header">
-          <Typography variant="h6" noWrap color="primary">
+          <Grid item>{headerComponent}</Grid>
+          {/* <Typography variant="h6" noWrap color="primary">
             Permanent drawer
-          </Typography>
+          </Typography> */}
           <Grid item className="util">
             <Button
               color="primary"

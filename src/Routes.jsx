@@ -18,9 +18,10 @@ import Banner from "./pages/banner";
 import Notice from "./pages/notice";
 import Content from "./pages/content";
 import Lecturer from "./pages/lecturer";
-import User from "./pages/user";
 import Payment from "./pages/payment";
 
+import User from "./pages/user";
+import Report from "./pages/report";
 //-------------------------------------------
 // redux
 import { useDispatch, useSelector } from "react-redux";
@@ -120,6 +121,8 @@ const Routes = () => {
           <Switch>
             <Route exact path="/" component={User} />
             <Route path="/user" component={User} />
+            <Route path="/report" component={Report} />
+
             <Route path="/lecture" component={Lecture} />
             <Route path="/faq" component={Faq} />
             <Route path="/inquiry" component={Inquiry} />

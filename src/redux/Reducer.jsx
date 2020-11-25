@@ -2,6 +2,7 @@ import { env } from "../env";
 import { tempTableData } from "../data";
 import { CurrentAuthUiState, UserState } from "@psyrenpark/auth";
 import { produce, setAutoFreeze } from "immer";
+import IsoCode from "../json/iso_code.json";
 
 const sort_tab_data = [
   { key: 0, value: "번호순", order_column: "lecture_no", order_type: "DESC" },
@@ -158,6 +159,70 @@ const sort_span_dic = {
   },
 };
 
+const filter_list_type = {
+  client_user: {
+    key: "client_user",
+    label: "일반회원",
+  },
+  business_user: {
+    key: "business_user",
+    label: "사업자회원",
+  },
+};
+
+const order_column = {
+  user_name: {
+    key: "user_name",
+    label: "이름",
+  },
+  email: {
+    key: "email",
+    label: "이메일",
+  },
+  trade_name: {
+    key: "trade_name",
+    label: "법인/상호명",
+  },
+  history: {
+    key: "history",
+    label: "히스토리",
+  },
+  join_dt: {
+    key: "join_dt",
+    label: "가입일자",
+  },
+};
+const filter_gender = {
+  all: {
+    key: "all",
+    label: "전체",
+  },
+  male: {
+    key: "male",
+    label: "남자",
+  },
+  female: {
+    key: "female",
+    label: "여자",
+  },
+};
+
+const filter_is_approved = {
+  all: {
+    key: "all",
+    label: "전체",
+  },
+
+  awating: {
+    key: "awating",
+    label: "대기중",
+  },
+  approved: {
+    key: "approved",
+    label: "승인완료",
+  },
+};
+
 const search_type_data = [
   { key: 0, value: "이름", search_column: "search_name" },
   { key: 1, value: "제목", search_column: "search_title" },
@@ -247,6 +312,30 @@ const inquiry_type_data = [
 ];
 
 const list_params_base = {
+  // order_column: "lecture_no",
+  // order_type: "DESC",
+  // search_type: "lecturer_name",
+  // filter_begin_dt: new Date(),
+  // filter_end_dt: new Date(),
+  // search_text: null,
+  // current_page: 1,
+  // current_department: 0,
+};
+
+const list_params_default = {
+  user: {
+    filter_list_type: "client_user",
+    order_column: "user_name",
+    filter_country_code: "ALL",
+    filter_gender: "all",
+    filter_is_approved: "all",
+    current_page: 1,
+  },
+  report: {
+    filter_list_type: "client_user",
+    order_column: "user_name",
+    current_page: 1,
+  },
   // order_column: "lecture_no",
   // order_type: "DESC",
   // search_type: "lecturer_name",
@@ -377,7 +466,19 @@ const lecturer = {
 };
 
 const user = {
-  list_params: list_params_base,
+  list_params: {
+    ...list_params_default.user,
+    // list_type: "client_user",
+    // order_column: "user_name",
+
+    // order_type: "DESC",
+    // search_type: "lecturer_name",
+    // filter_begin_dt: new Date(),
+    // filter_end_dt: new Date(),
+    // search_text: null,
+    // current_page: 1,
+    // current_department: 0,
+  },
   sort_tab_data: sort_tab_data,
   search_type_data: search_type_data,
   // tab_type_data: [
@@ -463,7 +564,7 @@ const adjustment = {
 const INITIAL_STATE = {
   locale: "ko-KR",
   baseFileServerUrl: env.baseFileServerUrl,
-  isLoading: false, // 로딩 상태
+  isLoading: 0, // 로딩 상태
   currentAuthUiState: CurrentAuthUiState.SIGN_IN, // 인증 화면 상태
   // currentAuthUiState: CurrentAuthUiState.CHANGE_PASSWORD, // 인증 화면 상태
   userState: UserState.SIGNED, // 인증 상태
@@ -473,9 +574,14 @@ const INITIAL_STATE = {
     code: "",
     data: [],
   },
+  list_params_default: list_params_default,
+  filter_list_type: filter_list_type,
+  order_column: order_column,
+  filter_country_code: IsoCode,
+  filter_gender: filter_gender,
+  filter_is_approved: filter_is_approved,
   sort_span_dic: sort_span_dic,
   modalOverflow: true,
-  user_type_data: user_type_data,
   inquiry_type_data: inquiry_type_data,
   tempTableData: tempTableData,
   acceptedFile: {
@@ -520,6 +626,7 @@ const INITIAL_STATE = {
   lecturer: lecturer,
   lecture: lecture,
   user: user,
+  report: {},
   payment: payment,
   reg_lecture: reg_lecture,
   adjustment: adjustment,
@@ -559,7 +666,23 @@ export default (state = INITIAL_STATE, { type, payload }) => {
       };
 
     case "SET_IS_LOADING":
-      return { ...state, isLoading: payload };
+      // return { ...state, isLoading: payload };
+      // return produce(state, (draft) => {
+      //   draft.isLoading = payload
+      //     ? draft.isLoading + 1
+      //     : draft.isLoading > 0
+      //     ? draft.isLoading - 1
+      //     : draft.isLoading;
+      // });
+
+      return {
+        ...state,
+        isLoading: payload
+          ? state.isLoading + 1
+          : state.isLoading > 0
+          ? state.isLoading - 1
+          : state.isLoading,
+      };
 
     case "SET_CURRENT_AUTH_UI_STATE":
       return { ...state, currentAuthUiState: payload };

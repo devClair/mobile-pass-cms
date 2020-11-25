@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Wrapper from "./styles";
 import { Grid, Button, Link } from "@material-ui/core";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
+import SaveOutlinedIcon from "@material-ui/icons/SaveOutlined";
 
 import ReactExport from "react-data-export";
 import { Pagination } from "@material-ui/lab";
@@ -27,6 +28,26 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "rgba(242,194,0,0.5)",
       color: "white",
     },
+  },
+  tableFooter: {
+    padding: theme.spacing(2),
+    "@media (min-width: 1280px)": {
+      padding: theme.spacing(5, 5, 10, 5),
+    },
+  },
+  footerCenter: {
+    display: "flex",
+    justifyContent: "center",
+  },
+  footerRight: {
+    display: "flex",
+    justifyContent: "flex-end",
+    "& button": {
+      margin: theme.spacing(0, 1),
+    },
+  },
+  pagination: {
+    "& .MuiPaginationItem-sizeSmall": { margin: "0 4px" },
   },
 }));
 
@@ -81,85 +102,90 @@ const TableFooter = (props) => {
   };
 
   return (
-    <Wrapper>
-      <Grid container justify="space-between" className="table_footer">
-        <Grid item className="btn_excel">
-          {excel && (
-            <button
-              variant="contained"
-              className="btn_excel"
-              onClick={onClickExcelButton}
-            >
-              엑셀저장
-            </button>
-          )}
-          {isOpen && (
-            <NewWindow
-              onOpen={onOpen}
-              onBlock={onBlock}
-              onUnload={onUnload}
-              title={"다운로드"}
-            >
-              <Grid
-                container
-                alignItems={"center"}
-                justify={"center"}
-                style={{
-                  // backgroundColor: "red",
-                  height: "100vh",
-                }}
-              >
-                <Grid item>
-                  {!excelUrl ? (
-                    <CircularProgress color="inherit" />
-                  ) : (
-                    <a href={excelUrl} className={classes.a_button}>
-                      다운로드
-                    </a>
-                  )}
-                </Grid>
-              </Grid>
-            </NewWindow>
-          )}
-        </Grid>
-        <Grid className="table_pagination">
-          <Pagination
-            page={page}
-            count={count}
-            onChange={(e, n) => {
-              console.log("TableFooter -> n", n);
-              if (onChangeCallback) {
-                onChangeCallback(n);
-              }
-            }}
-          />
-        </Grid>
+    <Grid container justify="space-between" className={classes.tableFooter}>
+      <Grid item xs={12} md={3} lg={4} className={classes.footerLeft}>
+        {/* footerLeft */}
+      </Grid>
+      <Grid item xs={12} md={6} lg={4} className={classes.footerCenter}>
+        {/* footerCenter */}
+        <Pagination
+          color="primary"
+          shape="rounded"
+          size="small"
+          page={page}
+          count={count}
+          onChange={(e, n) => {
+            console.log("TableFooter -> n", n);
+            if (onChangeCallback) {
+              onChangeCallback(n);
+            }
+          }}
+          showFirstButton
+          showLastButton
+          className={classes.pagination}
+        />
+      </Grid>
+      <Grid item xs={12} md={3} lg={4} className={classes.footerRight}>
+        {/* footerRight */}
         {createButton && (
-          <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<EditOutlinedIcon />}
-              onClick={goToCreate}
-            >
-              작성하기
-            </Button>
-          </Grid>
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<EditOutlinedIcon />}
+            onClick={goToCreate}
+          >
+            작성하기
+          </Button>
         )}
         {goBackButton && (
-          <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<EditOutlinedIcon />}
-              onClick={onBackCallback}
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<EditOutlinedIcon />}
+            onClick={onBackCallback}
+          >
+            전체목록
+          </Button>
+        )}
+        {excel && (
+          <Button
+            variant="contained"
+            startIcon={<SaveOutlinedIcon />}
+            onClick={onClickExcelButton}
+          >
+            엑셀저장
+          </Button>
+        )}
+        {isOpen && (
+          <NewWindow
+            onOpen={onOpen}
+            onBlock={onBlock}
+            onUnload={onUnload}
+            title={"다운로드"}
+          >
+            <Grid
+              container
+              alignItems={"center"}
+              justify={"center"}
+              style={{
+                // backgroundColor: "red",
+                height: "100vh",
+              }}
             >
-              전체목록
-            </Button>
-          </Grid>
+              <Grid item>
+                {!excelUrl ? (
+                  <CircularProgress color="inherit" />
+                ) : (
+                  <a href={excelUrl} className={classes.a_button}>
+                    다운로드
+                  </a>
+                )}
+              </Grid>
+            </Grid>
+          </NewWindow>
         )}
       </Grid>
-    </Wrapper>
+    </Grid>
   );
 };
 

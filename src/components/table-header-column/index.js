@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 //-------------------------------------------
 // ui
@@ -12,6 +12,7 @@ import {
   InputLabel,
   InputBase,
   Button,
+  ButtonGroup,
   Menu,
   Typography,
   Box,
@@ -61,6 +62,22 @@ const useStyles = makeStyles((theme) => ({
   search_grid: {
     cursor: "pointer",
   },
+  outlinedCustom: {
+    color: theme.palette.primary.main,
+    "& .MuiOutlinedInput-input": {
+      paddingTop: 14,
+      paddingBottom: 16,
+      background: "white",
+      fontWeight: "500",
+    },
+    "& fieldset": {
+      borderWidth: "2px !important",
+      "&.MuiOutlinedInput-notchedOutline": {
+        borderColor: `${theme.palette.primary.light} !important`,
+      },
+    },
+    // maxHeight: 16.5,
+  },
 }));
 
 export const TableHeaderSortSpan = (props) => {
@@ -105,6 +122,53 @@ export const TableHeaderSortSpan = (props) => {
         {count % 2 === 1 ? <ArrowDropDown /> : <ArrowDropUp />}
       </Grid>
     </Grid>
+  );
+};
+
+export const OrderSelectMenu = (props) => {
+  const classes = useStyles();
+  const { onChange, filter_list_type, order_data, order_column } = props;
+
+  const [state, setState] = useState("");
+
+  const handleChange = (event) => {
+    setState(event.target.value);
+
+    if (onChange) {
+      onChange({
+        order_column: order_data[filter_list_type].find(
+          (order) => order.value === event.target.value
+        ).value,
+      });
+    }
+  };
+  const mounted = useRef(false);
+  useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+      console.log({ order_column });
+      setState(order_column);
+    } else {
+      console.log(order_data[filter_list_type][0]);
+      setState(order_data[filter_list_type][0].value);
+    }
+  }, [filter_list_type]);
+
+  return (
+    <Select
+      // className={classes[className]}
+      variant="outlined"
+      value={state}
+      onChange={handleChange}
+    >
+      {order_data[filter_list_type]?.map((order, index) => {
+        return (
+          <MenuItem key={order.key} value={order.value}>
+            {order.key}
+          </MenuItem>
+        );
+      })}
+    </Select>
   );
 };
 
@@ -238,51 +302,91 @@ export const DatePicker = (props) => {
 
 export const TypeSelectMenu = (props) => {
   const classes = useStyles();
-  const { type_data, onChange } = props;
+  const { items, current, onChange, variant, className } = props;
 
-  const [menuItem, setMenuItem] = useState(
-    type_data.length > 0 && type_data[0].value ? type_data[0].value : ""
-  );
+  const [state, setState] = useState("");
 
   const onSelectMenuItem = (event) => {
-    setMenuItem(event.target.value);
+    setState(event.target.value);
 
     if (onChange) {
-      onChange(
-        type_data.find((typeInfo) => typeInfo.value === event.target.value)
-      );
+      onChange(items.find((item) => item.key === event.target.value));
+    }
+  };
+  useEffect(() => {
+    // setState(items.find((x) => x.value === list_type).value);
+    setState(current);
+  }, []);
+
+  return (
+    <Select
+      className={classes[className]}
+      variant={variant}
+      value={state}
+      onChange={onSelectMenuItem}
+    >
+      {items.map((item, index) => {
+        return (
+          <MenuItem key={item.key} value={item.key}>
+            {item.label}
+          </MenuItem>
+        );
+      })}
+    </Select>
+  );
+};
+
+export const SelectComponent = (props) => {
+  const classes = useStyles();
+  const { items, current, onChange, variant, className } = props;
+
+  const onSelectMenuItem = (event) => {
+    if (onChange) {
+      onChange(items.find((item) => item.key === event.target.value));
     }
   };
 
   return (
-    <Grid
-      container
-      // className="search_grid"
-      // justify="center"
-      // alignItems="flex-start"
-      // justify="flex-start"
-      // alignContent="flex-start"
-      spacing={1}
+    <Select
+      className={classes[className]}
+      variant={variant}
+      value={current}
+      onChange={onSelectMenuItem}
     >
-      <Box mr={7}>
-        <Grid item className="search_select">
-          <FormControl margin="dense">
-            <Select
-              style={{ width: 100 }}
-              value={menuItem}
-              onChange={onSelectMenuItem}
-            >
-              {type_data.map((typeInfo, index) => {
-                return (
-                  <MenuItem value={typeInfo.value} key={typeInfo.key}>
-                    {typeInfo.value}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-        </Grid>
-      </Box>
-    </Grid>
+      {items.map((item, index) => {
+        return (
+          <MenuItem key={item.key} value={item.key}>
+            {item.label}
+          </MenuItem>
+        );
+      })}
+    </Select>
+  );
+};
+
+export const ButtonGroupComponent = (props) => {
+  const classes = useStyles();
+  const { items, current, onClick, variant, className } = props;
+
+  const handleOnClick = (item) => (e) => {
+    if (onClick) {
+      onClick(item);
+    }
+  };
+
+  return (
+    <ButtonGroup aria-label="contained primary button group">
+      {items.map((x, i) => {
+        return (
+          <Button
+            color={x.key === current ? "primary" : "default"}
+            variant={x.key === current ? "contained" : "outlined"}
+            onClick={handleOnClick(x)}
+          >
+            {x.label}
+          </Button>
+        );
+      })}
+    </ButtonGroup>
   );
 };

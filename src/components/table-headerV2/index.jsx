@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Wrapper from "./styles";
 import {
   Grid,
+  Box,
   FormControl,
   Select,
   MenuItem,
@@ -26,6 +27,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { startOfMonth, endOfMonth, format, endOfToday } from "date-fns";
 
 const useStyles = makeStyles((theme) => ({
+  tableHeader: {
+    padding: theme.spacing(2),
+    "@media (min-width: 1280px)": {
+      padding: theme.spacing(3, 5),
+    },
+  },
   search: {
     position: "relative",
     borderRadius: theme.shape.borderRadius,
@@ -83,7 +90,7 @@ const useTabs = (TabValue, Content) => {
 const TableHeader = (props) => {
   // console.log(window.location.pathname);
   const path = window.location.pathname.split("/")[1];
-  const { titleComponent, columns } = props;
+  const { columns, searchComponent } = props;
 
   // const reducer = useSelector((state) => state.reducer);
   // const dispatch = useDispatch();
@@ -105,14 +112,9 @@ const TableHeader = (props) => {
   const classes = useStyles();
 
   return (
-    <Grid container className="table_header" justify="space-between">
+    <Grid container justify="space-between" className={classes.tableHeader}>
       <Grid item>
-        <Grid container>
-          <Grid item>{titleComponent}</Grid>
-        </Grid>
-      </Grid>
-      <Grid item>
-        <Grid container justify="flex-end">
+        <Grid container justify="flex-start">
           {/* <Grid className="content">{children}</Grid> */}
 
           {columns.map((column, index) => {
@@ -264,6 +266,12 @@ const TableHeader = (props) => {
             </Grid>
           )} */}
         </Grid>
+      </Grid>
+      <Grid item>
+        {/* {searchComponent && <SearchFilter
+          search_type_data={lecture.search_type_data}
+          onChange={onChangeSearchColumn}
+        />}         */}
       </Grid>
     </Grid>
   );

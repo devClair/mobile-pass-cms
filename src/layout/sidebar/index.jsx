@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 
 // material-ui/core/styles
 import { makeStyles } from "@material-ui/core/styles";
@@ -26,6 +26,9 @@ import { Link, useHistory } from "react-router-dom";
 
 // clsx
 import clsx from "clsx";
+
+// redux
+import { useSelector, useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,9 +58,33 @@ const useStyles = makeStyles((theme) => ({
   listItem: {
     paddingTop: 24,
     paddingBottom: 12,
+
+    "&.MuiListItem-button": {
+      "&:hover": {
+        backgroundColor: (props) => theme.palette.primary.light,
+        "&::before": {
+          content: '" "',
+          position: "absolute",
+          left: 0,
+          top: 0,
+          width: 4,
+          height: "100%",
+          backgroundColor: "white",
+        },
+      },
+    },
   },
   currentPath: {
     backgroundColor: (props) => theme.palette.primary.light,
+    "&::before": {
+      content: (props) => !props.hover && '" "',
+      position: "absolute",
+      left: 0,
+      top: 0,
+      width: 4,
+      height: "100%",
+      backgroundColor: "white",
+    },
   },
   itemImage: {
     width: 24,
@@ -78,30 +105,37 @@ const data = [
   {
     key: "user",
     label: "회원관리",
+    icon: UserImage,
   },
   {
     key: "report",
     label: "검사기록",
+    icon: UserImage,
   },
   {
     key: "push",
     label: "푸쉬알림",
+    icon: UserImage,
   },
   {
     key: "id",
     label: "ID 관리",
+    icon: UserImage,
   },
   {
     key: "policy",
     label: "고객센터",
+    icon: UserImage,
   },
 ];
 
 const Sidebar = (props) => {
-  const { drawerWidth, currentPath } = props;
-  const classes = useStyles({ drawerWidth: drawerWidth });
+  const { drawerWidth, locationPathname } = props;
+  const [hover, setHover] = useState(false);
+  const classes = useStyles({ drawerWidth: drawerWidth, hover: hover });
   const history = useHistory();
-  // console.log({ currentPath });
+  const reducer = useSelector((state) => state.reducer);
+  const dispatch = useDispatch();
 
   return (
     <Drawer
@@ -139,21 +173,37 @@ const Sidebar = (props) => {
             <ListItem
               className={clsx(
                 classes.listItem,
-                (x.key === currentPath?.split("/")[1] ||
-                  (currentPath === "/" && i === 0)) &&
+                (x.key === locationPathname?.split("/")[1] ||
+                  (locationPathname === "/" && i === 0)) &&
+                  !hover &&
                   classes.currentPath
               )}
               button
               key={x.key}
               onClick={() => {
+                dispatch({
+                  type: "SET_HADER_LIST_PARAMS",
+                  payload: {
+                    reducer_type: x.key,
+                    list_params: {
+                      ...reducer.list_params_default[x.key],
+                    },
+                  },
+                });
                 history.push(`/${x.key}`);
+              }}
+              onMouseEnter={(e) => {
+                setHover(true);
+              }}
+              onMouseLeave={(e) => {
+                setHover(false);
               }}
             >
               <Grid container alignItems="center" justify="center">
                 <Grid item className={classes.itemImage}>
                   <RatioContainer w={44} h={51}>
                     <img
-                      src={UserImage}
+                      src={x.icon}
                       style={{
                         width: "100%",
                         height: "100%",

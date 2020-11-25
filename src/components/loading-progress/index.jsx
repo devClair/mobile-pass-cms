@@ -22,11 +22,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SimpleBackdrop() {
   const classes = useStyles();
-  const reducer = useSelector((state) => state.reducer);
+  const isLoading = useSelector((state) => Boolean(state.reducer.isLoading));
+
   // const [open, setOpen] = React.useState(false);
 
   // useEffect(() => {
-  //   setOpen(reducer.isLoading);
+  //   console.log(reducer.isLoading);
+  //   // setOpen(reducer.isLoading);
   // }, [reducer.isLoading]);
 
   return (
@@ -34,7 +36,7 @@ export default function SimpleBackdrop() {
       {/* <Button variant="outlined" color="primary" onClick={handleToggle}>
         Show backdrop
       </Button> */}
-      <Backdrop className={classes.backdrop} open={reducer.isLoading}>
+      <Backdrop className={classes.backdrop} open={isLoading}>
         <CircularProgress color="primary" />
         {/* <div className={classes.root}>
           <LinearProgress color="primary" />

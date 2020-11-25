@@ -1,0 +1,1508 @@
+[
+    {
+        "key": "ALL",
+        "label": "전체",
+        "code": 999,
+        "alpha-3": "ALL"
+    },
+    {
+        "key": "GH",
+        "label": "가나",
+        "code": 288,
+        "alpha-3": "GHA"
+    },
+    {
+        "key": "GA",
+        "label": "가봉",
+        "code": 266,
+        "alpha-3": "GAB"
+    },
+    {
+        "key": "GY",
+        "label": "가이아나",
+        "code": 328,
+        "alpha-3": "GUY"
+    },
+    {
+        "key": "GM",
+        "label": "감비아",
+        "code": 270,
+        "alpha-3": "GMB"
+    },
+    {
+        "key": "GG",
+        "label": "건지섬",
+        "code": 831,
+        "alpha-3": "GGY"
+    },
+    {
+        "key": "GP",
+        "label": "과들루프",
+        "code": 312,
+        "alpha-3": "GLP"
+    },
+    {
+        "key": "GT",
+        "label": "과테말라",
+        "code": 320,
+        "alpha-3": "GTM"
+    },
+    {
+        "key": "GU",
+        "label": "괌",
+        "code": 316,
+        "alpha-3": "GUM"
+    },
+    {
+        "key": "GD",
+        "label": "그레나다",
+        "code": 308,
+        "alpha-3": "GRD"
+    },
+    {
+        "key": "GR",
+        "label": "그리스",
+        "code": 300,
+        "alpha-3": "GRC"
+    },
+    {
+        "key": "GL",
+        "label": "그린란드",
+        "code": 304,
+        "alpha-3": "GRL"
+    },
+    {
+        "key": "GN",
+        "label": "기니",
+        "code": 324,
+        "alpha-3": "GIN"
+    },
+    {
+        "key": "GW",
+        "label": "기니비사우",
+        "code": 624,
+        "alpha-3": "GNB"
+    },
+    {
+        "key": "NA",
+        "label": "나미비아",
+        "code": 516,
+        "alpha-3": "NAM"
+    },
+    {
+        "key": "NR",
+        "label": "나우루",
+        "code": 520,
+        "alpha-3": "NRU"
+    },
+    {
+        "key": "NG",
+        "label": "나이지리아",
+        "code": 566,
+        "alpha-3": "NGA"
+    },
+    {
+        "key": "AQ",
+        "label": "남극",
+        "code": 10,
+        "alpha-3": "ATA"
+    },
+    {
+        "key": "SS",
+        "label": "남수단",
+        "code": 728,
+        "alpha-3": "SSD"
+    },
+    {
+        "key": "ZA",
+        "label": "남아프리카 공화국",
+        "code": 710,
+        "alpha-3": "ZAF"
+    },
+    {
+        "key": "NL",
+        "label": "네덜란드",
+        "code": 528,
+        "alpha-3": "NLD"
+    },
+    {
+        "key": "AN",
+        "label": "네덜란드령 안틸레스",
+        "code": 530,
+        "alpha-3": "ANT"
+    },
+    {
+        "key": "NP",
+        "label": "네팔",
+        "code": 524,
+        "alpha-3": "NPL"
+    },
+    {
+        "key": "NO",
+        "label": "노르웨이",
+        "code": 578,
+        "alpha-3": "NOR"
+    },
+    {
+        "key": "NF",
+        "label": "노퍽섬",
+        "code": 574,
+        "alpha-3": "NFK"
+    },
+    {
+        "key": "NC",
+        "label": "누벨칼레도니",
+        "code": 540,
+        "alpha-3": "NCL"
+    },
+    {
+        "key": "NZ",
+        "label": "뉴질랜드",
+        "code": 554,
+        "alpha-3": "NZL"
+    },
+    {
+        "key": "NU",
+        "label": "니우에",
+        "code": 570,
+        "alpha-3": "NIU"
+    },
+    {
+        "key": "NE",
+        "label": "니제르",
+        "code": 562,
+        "alpha-3": "NER"
+    },
+    {
+        "key": "NI",
+        "label": "니카라과",
+        "code": 558,
+        "alpha-3": "NIC"
+    },
+    {
+        "key": "KR",
+        "label": "대한민국",
+        "code": 410,
+        "alpha-3": "KOR"
+    },
+    {
+        "key": "DK",
+        "label": "덴마크",
+        "code": 208,
+        "alpha-3": "DNK"
+    },
+    {
+        "key": "DO",
+        "label": "도미니카 공화국",
+        "code": 214,
+        "alpha-3": "DOM"
+    },
+    {
+        "key": "DM",
+        "label": "도미니카 연방",
+        "code": 212,
+        "alpha-3": "DMA"
+    },
+    {
+        "key": "DE",
+        "label": "독일",
+        "code": 276,
+        "alpha-3": "DEU"
+    },
+    {
+        "key": "TL",
+        "label": "동티모르",
+        "code": 626,
+        "alpha-3": "TLS"
+    },
+    {
+        "key": "LA",
+        "label": "라오스",
+        "code": 418,
+        "alpha-3": "LAO"
+    },
+    {
+        "key": "LR",
+        "label": "라이베리아",
+        "code": 430,
+        "alpha-3": "LBR"
+    },
+    {
+        "key": "LV",
+        "label": "라트비아",
+        "code": 428,
+        "alpha-3": "LVA"
+    },
+    {
+        "key": "RU",
+        "label": "러시아",
+        "code": 643,
+        "alpha-3": "RUS"
+    },
+    {
+        "key": "LB",
+        "label": "레바논",
+        "code": 422,
+        "alpha-3": "LBN"
+    },
+    {
+        "key": "LS",
+        "label": "레소토",
+        "code": 426,
+        "alpha-3": "LSO"
+    },
+    {
+        "key": "RE",
+        "label": "레위니옹",
+        "code": 638,
+        "alpha-3": "REU"
+    },
+    {
+        "key": "RO",
+        "label": "루마니아",
+        "code": 642,
+        "alpha-3": "ROU"
+    },
+    {
+        "key": "LU",
+        "label": "룩셈부르크",
+        "code": 442,
+        "alpha-3": "LUX"
+    },
+    {
+        "key": "RW",
+        "label": "르완다",
+        "code": 646,
+        "alpha-3": "RWA"
+    },
+    {
+        "key": "LY",
+        "label": "리비아",
+        "code": 434,
+        "alpha-3": "LBY"
+    },
+    {
+        "key": "LT",
+        "label": "리투아니아",
+        "code": 440,
+        "alpha-3": "LTU"
+    },
+    {
+        "key": "LI",
+        "label": "리히텐슈타인",
+        "code": 438,
+        "alpha-3": "LIE"
+    },
+    {
+        "key": "MG",
+        "label": "마다가스카르",
+        "code": 450,
+        "alpha-3": "MDG"
+    },
+    {
+        "key": "MQ",
+        "label": "마르티니크",
+        "code": 474,
+        "alpha-3": "MTQ"
+    },
+    {
+        "key": "MH",
+        "label": "마셜 제도",
+        "code": 584,
+        "alpha-3": "MHL"
+    },
+    {
+        "key": "YT",
+        "label": "마요트",
+        "code": 175,
+        "alpha-3": "MYT"
+    },
+    {
+        "key": "MO",
+        "label": "마카오",
+        "code": 446,
+        "alpha-3": "MAC"
+    },
+    {
+        "key": "MK",
+        "label": "북마케도니아",
+        "code": 807,
+        "alpha-3": "MKD"
+    },
+    {
+        "key": "MW",
+        "label": "말라위",
+        "code": 454,
+        "alpha-3": "MWI"
+    },
+    {
+        "key": "MY",
+        "label": "말레이시아",
+        "code": 458,
+        "alpha-3": "MYS"
+    },
+    {
+        "key": "ML",
+        "label": "말리",
+        "code": 466,
+        "alpha-3": "MLI"
+    },
+    {
+        "key": "IM",
+        "label": "맨섬",
+        "code": 833,
+        "alpha-3": "IMN"
+    },
+    {
+        "key": "MX",
+        "label": "멕시코",
+        "code": 484,
+        "alpha-3": "MEX"
+    },
+    {
+        "key": "MC",
+        "label": "모나코",
+        "code": 492,
+        "alpha-3": "MCO"
+    },
+    {
+        "key": "MA",
+        "label": "모로코",
+        "code": 504,
+        "alpha-3": "MAR"
+    },
+    {
+        "key": "MU",
+        "label": "모리셔스",
+        "code": 480,
+        "alpha-3": "MUS"
+    },
+    {
+        "key": "MR",
+        "label": "모리타니",
+        "code": 478,
+        "alpha-3": "MRT"
+    },
+    {
+        "key": "MZ",
+        "label": "모잠비크",
+        "code": 508,
+        "alpha-3": "MOZ"
+    },
+    {
+        "key": "ME",
+        "label": "몬테네그로",
+        "code": 499,
+        "alpha-3": "MNE"
+    },
+    {
+        "key": "MS",
+        "label": "몬트세랫",
+        "code": 500,
+        "alpha-3": "MSR"
+    },
+    {
+        "key": "MD",
+        "label": "몰도바",
+        "code": 498,
+        "alpha-3": "MDA"
+    },
+    {
+        "key": "MV",
+        "label": "몰디브",
+        "code": 462,
+        "alpha-3": "MDV"
+    },
+    {
+        "key": "MT",
+        "label": "몰타",
+        "code": 470,
+        "alpha-3": "MLT"
+    },
+    {
+        "key": "MN",
+        "label": "몽골",
+        "code": 496,
+        "alpha-3": "MNG"
+    },
+    {
+        "key": "US",
+        "label": "미국",
+        "code": 840,
+        "alpha-3": "USA"
+    },
+    {
+        "key": "UM",
+        "label": "미국령 군소 제도",
+        "code": 581,
+        "alpha-3": "UMI"
+    },
+    {
+        "key": "VI",
+        "label": "미국령 버진아일랜드",
+        "code": 850,
+        "alpha-3": "VIR"
+    },
+    {
+        "key": "MM",
+        "label": "미얀마",
+        "code": 104,
+        "alpha-3": "MMR"
+    },
+    {
+        "key": "FM",
+        "label": "미크로네시아 연방",
+        "code": 583,
+        "alpha-3": "FSM"
+    },
+    {
+        "key": "VU",
+        "label": "바누아투",
+        "code": 548,
+        "alpha-3": "VUT"
+    },
+    {
+        "key": "BH",
+        "label": "바레인",
+        "code": 48,
+        "alpha-3": "BHR"
+    },
+    {
+        "key": "BB",
+        "label": "바베이도스",
+        "code": 52,
+        "alpha-3": "BRB"
+    },
+    {
+        "key": "VA",
+        "label": "바티칸 시국",
+        "code": 336,
+        "alpha-3": "VAT"
+    },
+    {
+        "key": "BS",
+        "label": "바하마",
+        "code": 44,
+        "alpha-3": "BHS"
+    },
+    {
+        "key": "BD",
+        "label": "방글라데시",
+        "code": 50,
+        "alpha-3": "BGD"
+    },
+    {
+        "key": "BM",
+        "label": "버뮤다",
+        "code": 60,
+        "alpha-3": "BMU"
+    },
+    {
+        "key": "BJ",
+        "label": "베냉",
+        "code": 204,
+        "alpha-3": "BEN"
+    },
+    {
+        "key": "VE",
+        "label": "베네수엘라",
+        "code": 862,
+        "alpha-3": "VEN"
+    },
+    {
+        "key": "VN",
+        "label": "베트남",
+        "code": 704,
+        "alpha-3": "VNM"
+    },
+    {
+        "key": "BE",
+        "label": "벨기에",
+        "code": 56,
+        "alpha-3": "BEL"
+    },
+    {
+        "key": "BY",
+        "label": "벨라루스",
+        "code": 112,
+        "alpha-3": "BLR"
+    },
+    {
+        "key": "BZ",
+        "label": "벨리즈",
+        "code": 84,
+        "alpha-3": "BLZ"
+    },
+    {
+        "key": "BQ",
+        "label": "보네르섬",
+        "code": 535,
+        "alpha-3": "BES"
+    },
+    {
+        "key": "BA",
+        "label": "보스니아 헤르체고비나",
+        "code": 70,
+        "alpha-3": "BIH"
+    },
+    {
+        "key": "BW",
+        "label": "보츠와나",
+        "code": 72,
+        "alpha-3": "BWA"
+    },
+    {
+        "key": "BO",
+        "label": "볼리비아",
+        "code": 68,
+        "alpha-3": "BOL"
+    },
+    {
+        "key": "BI",
+        "label": "부룬디",
+        "code": 108,
+        "alpha-3": "BDI"
+    },
+    {
+        "key": "BF",
+        "label": "부르키나파소",
+        "code": 854,
+        "alpha-3": "BFA"
+    },
+    {
+        "key": "BV",
+        "label": "부베섬",
+        "code": 74,
+        "alpha-3": "BVT"
+    },
+    {
+        "key": "BT",
+        "label": "부탄",
+        "code": 64,
+        "alpha-3": "BTN"
+    },
+    {
+        "key": "MP",
+        "label": "북마리아나 제도",
+        "code": 580,
+        "alpha-3": "MNP"
+    },
+    {
+        "key": "BG",
+        "label": "불가리아",
+        "code": 100,
+        "alpha-3": "BGR"
+    },
+    {
+        "key": "BR",
+        "label": "브라질",
+        "code": 76,
+        "alpha-3": "BRA"
+    },
+    {
+        "key": "BN",
+        "label": "브루나이",
+        "code": 96,
+        "alpha-3": "BRN"
+    },
+    {
+        "key": "WS",
+        "label": "사모아",
+        "code": 882,
+        "alpha-3": "WSM"
+    },
+    {
+        "key": "SA",
+        "label": "사우디아라비아",
+        "code": 682,
+        "alpha-3": "SAU"
+    },
+    {
+        "key": "GS",
+        "label": "사우스조지아 사우스샌드위치 제도",
+        "code": 239,
+        "alpha-3": "SGS"
+    },
+    {
+        "key": "SM",
+        "label": "산마리노",
+        "code": 674,
+        "alpha-3": "SMR"
+    },
+    {
+        "key": "ST",
+        "label": "상투메 프린시페",
+        "code": 678,
+        "alpha-3": "STP"
+    },
+    {
+        "key": "MF",
+        "label": "생마르탱",
+        "code": 663,
+        "alpha-3": "MAF"
+    },
+    {
+        "key": "BL",
+        "label": "생바르텔레미",
+        "code": 652,
+        "alpha-3": "BLM"
+    },
+    {
+        "key": "PM",
+        "label": "생피에르 미클롱",
+        "code": 666,
+        "alpha-3": "SPM"
+    },
+    {
+        "key": "EH",
+        "label": "서사하라",
+        "code": 732,
+        "alpha-3": "ESH"
+    },
+    {
+        "key": "SN",
+        "label": "세네갈",
+        "code": 686,
+        "alpha-3": "SEN"
+    },
+    {
+        "key": "RS",
+        "label": "세르비아",
+        "code": 688,
+        "alpha-3": "SRB"
+    },
+    {
+        "key": "SC",
+        "label": "세이셸",
+        "code": 690,
+        "alpha-3": "SYC"
+    },
+    {
+        "key": "LC",
+        "label": "세인트루시아",
+        "code": 662,
+        "alpha-3": "LCA"
+    },
+    {
+        "key": "VC",
+        "label": "세인트빈센트 그레나딘",
+        "code": 670,
+        "alpha-3": "VCT"
+    },
+    {
+        "key": "KN",
+        "label": "세인트키츠 네비스",
+        "code": 659,
+        "alpha-3": "KNA"
+    },
+    {
+        "key": "SH",
+        "label": "세인트헬레나",
+        "code": 654,
+        "alpha-3": "SHN"
+    },
+    {
+        "key": "SO",
+        "label": "소말리아",
+        "code": 706,
+        "alpha-3": "SOM"
+    },
+    {
+        "key": "SB",
+        "label": "솔로몬 제도",
+        "code": 90,
+        "alpha-3": "SLB"
+    },
+    {
+        "key": "SD",
+        "label": "수단",
+        "code": 729,
+        "alpha-3": "SDN"
+    },
+    {
+        "key": "SR",
+        "label": "수리남",
+        "code": 740,
+        "alpha-3": "SUR"
+    },
+    {
+        "key": "LK",
+        "label": "스리랑카",
+        "code": 144,
+        "alpha-3": "LKA"
+    },
+    {
+        "key": "SJ",
+        "label": "스발바르 얀마옌",
+        "code": 744,
+        "alpha-3": "SJM"
+    },
+    {
+        "key": "SE",
+        "label": "스웨덴",
+        "code": 752,
+        "alpha-3": "SWE"
+    },
+    {
+        "key": "CH",
+        "label": "스위스",
+        "code": 756,
+        "alpha-3": "CHE"
+    },
+    {
+        "key": "ES",
+        "label": "스페인",
+        "code": 724,
+        "alpha-3": "ESP"
+    },
+    {
+        "key": "SK",
+        "label": "슬로바키아",
+        "code": 703,
+        "alpha-3": "SVK"
+    },
+    {
+        "key": "SI",
+        "label": "슬로베니아",
+        "code": 705,
+        "alpha-3": "SVN"
+    },
+    {
+        "key": "SY",
+        "label": "시리아",
+        "code": 760,
+        "alpha-3": "SYR"
+    },
+    {
+        "key": "SL",
+        "label": "시에라리온",
+        "code": 694,
+        "alpha-3": "SLE"
+    },
+    {
+        "key": "SX",
+        "label": "신트마르턴",
+        "code": 534,
+        "alpha-3": "SXM"
+    },
+    {
+        "key": "SG",
+        "label": "싱가포르",
+        "code": 702,
+        "alpha-3": "SGP"
+    },
+    {
+        "key": "AE",
+        "label": "아랍에미리트",
+        "code": 784,
+        "alpha-3": "ARE"
+    },
+    {
+        "key": "AW",
+        "label": "아루바",
+        "code": 533,
+        "alpha-3": "ABW"
+    },
+    {
+        "key": "AM",
+        "label": "아르메니아",
+        "code": 51,
+        "alpha-3": "ARM"
+    },
+    {
+        "key": "AR",
+        "label": "아르헨티나",
+        "code": 32,
+        "alpha-3": "ARG"
+    },
+    {
+        "key": "AS",
+        "label": "아메리칸사모아",
+        "code": 16,
+        "alpha-3": "ASM"
+    },
+    {
+        "key": "IS",
+        "label": "아이슬란드",
+        "code": 352,
+        "alpha-3": "ISL"
+    },
+    {
+        "key": "HT",
+        "label": "아이티",
+        "code": 332,
+        "alpha-3": "HTI"
+    },
+    {
+        "key": "IE",
+        "label": "아일랜드",
+        "code": 372,
+        "alpha-3": "IRL"
+    },
+    {
+        "key": "AZ",
+        "label": "아제르바이잔",
+        "code": 31,
+        "alpha-3": "AZE"
+    },
+    {
+        "key": "AF",
+        "label": "아프가니스탄",
+        "code": 4,
+        "alpha-3": "AFG"
+    },
+    {
+        "key": "AD",
+        "label": "안도라",
+        "code": 20,
+        "alpha-3": "AND"
+    },
+    {
+        "key": "AL",
+        "label": "알바니아",
+        "code": 8,
+        "alpha-3": "ALB"
+    },
+    {
+        "key": "DZ",
+        "label": "알제리",
+        "code": 12,
+        "alpha-3": "DZA"
+    },
+    {
+        "key": "AO",
+        "label": "앙골라",
+        "code": 24,
+        "alpha-3": "AGO"
+    },
+    {
+        "key": "AG",
+        "label": "앤티가 바부다",
+        "code": 28,
+        "alpha-3": "ATG"
+    },
+    {
+        "key": "AI",
+        "label": "앵귈라",
+        "code": 660,
+        "alpha-3": "AIA"
+    },
+    {
+        "key": "ER",
+        "label": "에리트레아",
+        "code": 232,
+        "alpha-3": "ERI"
+    },
+    {
+        "key": "SZ",
+        "label": "에스와티니",
+        "code": 748,
+        "alpha-3": "SWZ"
+    },
+    {
+        "key": "EE",
+        "label": "에스토니아",
+        "code": 233,
+        "alpha-3": "EST"
+    },
+    {
+        "key": "EC",
+        "label": "에콰도르",
+        "code": 218,
+        "alpha-3": "ECU"
+    },
+    {
+        "key": "ET",
+        "label": "에티오피아",
+        "code": 231,
+        "alpha-3": "ETH"
+    },
+    {
+        "key": "SV",
+        "label": "엘살바도르",
+        "code": 222,
+        "alpha-3": "SLV"
+    },
+    {
+        "key": "GB",
+        "label": "영국",
+        "code": 826,
+        "alpha-3": "GBR"
+    },
+    {
+        "key": "VG",
+        "label": "영국령 버진아일랜드",
+        "code": 92,
+        "alpha-3": "VGB"
+    },
+    {
+        "key": "IO",
+        "label": "영국령 인도양 지역",
+        "code": 86,
+        "alpha-3": "IOT"
+    },
+    {
+        "key": "YE",
+        "label": "예멘",
+        "code": 887,
+        "alpha-3": "YEM"
+    },
+    {
+        "key": "OM",
+        "label": "오만",
+        "code": 512,
+        "alpha-3": "OMN"
+    },
+    {
+        "key": "AU",
+        "label": "오스트레일리아",
+        "code": 36,
+        "alpha-3": "AUS"
+    },
+    {
+        "key": "AT",
+        "label": "오스트리아",
+        "code": 40,
+        "alpha-3": "AUT"
+    },
+    {
+        "key": "HN",
+        "label": "온두라스",
+        "code": 340,
+        "alpha-3": "HND"
+    },
+    {
+        "key": "AX",
+        "label": "올란드 제도",
+        "code": 248,
+        "alpha-3": "ALA"
+    },
+    {
+        "key": "JO",
+        "label": "요르단",
+        "code": 400,
+        "alpha-3": "JOR"
+    },
+    {
+        "key": "UG",
+        "label": "우간다",
+        "code": 800,
+        "alpha-3": "UGA"
+    },
+    {
+        "key": "UY",
+        "label": "우루과이",
+        "code": 858,
+        "alpha-3": "URY"
+    },
+    {
+        "key": "UZ",
+        "label": "우즈베키스탄",
+        "code": 860,
+        "alpha-3": "UZB"
+    },
+    {
+        "key": "UA",
+        "label": "우크라이나",
+        "code": 804,
+        "alpha-3": "UKR"
+    },
+    {
+        "key": "WF",
+        "label": "왈리스 푸투나",
+        "code": 876,
+        "alpha-3": "WLF"
+    },
+    {
+        "key": "IQ",
+        "label": "이라크",
+        "code": 368,
+        "alpha-3": "IRQ"
+    },
+    {
+        "key": "IR",
+        "label": "이란",
+        "code": 364,
+        "alpha-3": "IRN"
+    },
+    {
+        "key": "IL",
+        "label": "이스라엘",
+        "code": 376,
+        "alpha-3": "ISR"
+    },
+    {
+        "key": "EG",
+        "label": "이집트",
+        "code": 818,
+        "alpha-3": "EGY"
+    },
+    {
+        "key": "IT",
+        "label": "이탈리아",
+        "code": 380,
+        "alpha-3": "ITA"
+    },
+    {
+        "key": "IN",
+        "label": "인도",
+        "code": 356,
+        "alpha-3": "IND"
+    },
+    {
+        "key": "ID",
+        "label": "인도네시아",
+        "code": 360,
+        "alpha-3": "IDN"
+    },
+    {
+        "key": "JP",
+        "label": "일본",
+        "code": 392,
+        "alpha-3": "JPN"
+    },
+    {
+        "key": "JM",
+        "label": "자메이카",
+        "code": 388,
+        "alpha-3": "JAM"
+    },
+    {
+        "key": "ZM",
+        "label": "잠비아",
+        "code": 894,
+        "alpha-3": "ZMB"
+    },
+    {
+        "key": "JE",
+        "label": "저지섬",
+        "code": 832,
+        "alpha-3": "JEY"
+    },
+    {
+        "key": "GQ",
+        "label": "적도 기니",
+        "code": 226,
+        "alpha-3": "GNQ"
+    },
+    {
+        "key": "KP",
+        "label": "조선민주주의인민공화국",
+        "code": 408,
+        "alpha-3": "PRK"
+    },
+    {
+        "key": "GE",
+        "label": "조지아",
+        "code": 268,
+        "alpha-3": "GEO"
+    },
+    {
+        "key": "CN",
+        "label": "중국",
+        "code": 156,
+        "alpha-3": "CHN"
+    },
+    {
+        "key": "CF",
+        "label": "중앙아프리카 공화국",
+        "code": 140,
+        "alpha-3": "CAF"
+    },
+    {
+        "key": "DJ",
+        "label": "지부티",
+        "code": 262,
+        "alpha-3": "DJI"
+    },
+    {
+        "key": "GI",
+        "label": "지브롤터",
+        "code": 292,
+        "alpha-3": "GIB"
+    },
+    {
+        "key": "ZW",
+        "label": "짐바브웨",
+        "code": 716,
+        "alpha-3": "ZWE"
+    },
+    {
+        "key": "TD",
+        "label": "차드",
+        "code": 148,
+        "alpha-3": "TCD"
+    },
+    {
+        "key": "CZ",
+        "label": "체코",
+        "code": 203,
+        "alpha-3": "CZE"
+    },
+    {
+        "key": "CL",
+        "label": "칠레",
+        "code": 152,
+        "alpha-3": "CHL"
+    },
+    {
+        "key": "CM",
+        "label": "카메룬",
+        "code": 120,
+        "alpha-3": "CMR"
+    },
+    {
+        "key": "CV",
+        "label": "카보베르데",
+        "code": 132,
+        "alpha-3": "CPV"
+    },
+    {
+        "key": "KZ",
+        "label": "카자흐스탄",
+        "code": 398,
+        "alpha-3": "KAZ"
+    },
+    {
+        "key": "QA",
+        "label": "카타르",
+        "code": 634,
+        "alpha-3": "QAT"
+    },
+    {
+        "key": "KH",
+        "label": "캄보디아",
+        "code": 116,
+        "alpha-3": "KHM"
+    },
+    {
+        "key": "CA",
+        "label": "캐나다",
+        "code": 124,
+        "alpha-3": "CAN"
+    },
+    {
+        "key": "KE",
+        "label": "케냐",
+        "code": 404,
+        "alpha-3": "KEN"
+    },
+    {
+        "key": "KY",
+        "label": "케이맨 제도",
+        "code": 136,
+        "alpha-3": "CYM"
+    },
+    {
+        "key": "KM",
+        "label": "코모로",
+        "code": 174,
+        "alpha-3": "COM"
+    },
+    {
+        "key": "CR",
+        "label": "코스타리카",
+        "code": 188,
+        "alpha-3": "CRI"
+    },
+    {
+        "key": "CC",
+        "label": "코코스 제도",
+        "code": 166,
+        "alpha-3": "CCK"
+    },
+    {
+        "key": "CI",
+        "label": "코트디부아르",
+        "code": 384,
+        "alpha-3": "CIV"
+    },
+    {
+        "key": "CO",
+        "label": "콜롬비아",
+        "code": 170,
+        "alpha-3": "COL"
+    },
+    {
+        "key": "CG",
+        "label": "콩고 공화국",
+        "code": 178,
+        "alpha-3": "COG"
+    },
+    {
+        "key": "CD",
+        "label": "콩고 민주 공화국",
+        "code": 180,
+        "alpha-3": "COD"
+    },
+    {
+        "key": "CU",
+        "label": "쿠바",
+        "code": 192,
+        "alpha-3": "CUB"
+    },
+    {
+        "key": "KW",
+        "label": "쿠웨이트",
+        "code": 414,
+        "alpha-3": "KWT"
+    },
+    {
+        "key": "CK",
+        "label": "쿡 제도",
+        "code": 184,
+        "alpha-3": "COK"
+    },
+    {
+        "key": "CW",
+        "label": "퀴라소",
+        "code": 531,
+        "alpha-3": "CUW"
+    },
+    {
+        "key": "HR",
+        "label": "크로아티아",
+        "code": 191,
+        "alpha-3": "HRV"
+    },
+    {
+        "key": "CX",
+        "label": "크리스마스섬",
+        "code": 162,
+        "alpha-3": "CXR"
+    },
+    {
+        "key": "KG",
+        "label": "키르기스스탄",
+        "code": 417,
+        "alpha-3": "KGZ"
+    },
+    {
+        "key": "KI",
+        "label": "키리바시",
+        "code": 296,
+        "alpha-3": "KIR"
+    },
+    {
+        "key": "CY",
+        "label": "키프로스",
+        "code": 196,
+        "alpha-3": "CYP"
+    },
+    {
+        "key": "TW",
+        "label": "타이완",
+        "code": 158,
+        "alpha-3": "TWN"
+    },
+    {
+        "key": "TJ",
+        "label": "타지키스탄",
+        "code": 762,
+        "alpha-3": "TJK"
+    },
+    {
+        "key": "TZ",
+        "label": "탄자니아",
+        "code": 834,
+        "alpha-3": "TZA"
+    },
+    {
+        "key": "TH",
+        "label": "태국",
+        "code": 764,
+        "alpha-3": "THA"
+    },
+    {
+        "key": "TC",
+        "label": "터크스 케이커스 제도",
+        "code": 796,
+        "alpha-3": "TCA"
+    },
+    {
+        "key": "TR",
+        "label": "터키",
+        "code": 792,
+        "alpha-3": "TUR"
+    },
+    {
+        "key": "TG",
+        "label": "토고",
+        "code": 768,
+        "alpha-3": "TGO"
+    },
+    {
+        "key": "TK",
+        "label": "토켈라우",
+        "code": 772,
+        "alpha-3": "TKL"
+    },
+    {
+        "key": "TO",
+        "label": "통가",
+        "code": 776,
+        "alpha-3": "TON"
+    },
+    {
+        "key": "TM",
+        "label": "투르크메니스탄",
+        "code": 795,
+        "alpha-3": "TKM"
+    },
+    {
+        "key": "TV",
+        "label": "투발루",
+        "code": 798,
+        "alpha-3": "TUV"
+    },
+    {
+        "key": "TN",
+        "label": "튀니지",
+        "code": 788,
+        "alpha-3": "TUN"
+    },
+    {
+        "key": "TT",
+        "label": "트리니다드 토바고",
+        "code": 780,
+        "alpha-3": "TTO"
+    },
+    {
+        "key": "PA",
+        "label": "파나마",
+        "code": 591,
+        "alpha-3": "PAN"
+    },
+    {
+        "key": "PY",
+        "label": "파라과이",
+        "code": 600,
+        "alpha-3": "PRY"
+    },
+    {
+        "key": "PK",
+        "label": "파키스탄",
+        "code": 586,
+        "alpha-3": "PAK"
+    },
+    {
+        "key": "PG",
+        "label": "파푸아뉴기니",
+        "code": 598,
+        "alpha-3": "PNG"
+    },
+    {
+        "key": "PW",
+        "label": "팔라우",
+        "code": 585,
+        "alpha-3": "PLW"
+    },
+    {
+        "key": "PS",
+        "label": "팔레스타인",
+        "code": 275,
+        "alpha-3": "PSE"
+    },
+    {
+        "key": "FO",
+        "label": "페로 제도",
+        "code": 234,
+        "alpha-3": "FRO"
+    },
+    {
+        "key": "PE",
+        "label": "페루",
+        "code": 604,
+        "alpha-3": "PER"
+    },
+    {
+        "key": "PT",
+        "label": "포르투갈",
+        "code": 620,
+        "alpha-3": "PRT"
+    },
+    {
+        "key": "FK",
+        "label": "포클랜드 제도",
+        "code": 238,
+        "alpha-3": "FLK"
+    },
+    {
+        "key": "PL",
+        "label": "폴란드",
+        "code": 616,
+        "alpha-3": "POL"
+    },
+    {
+        "key": "PR",
+        "label": "푸에르토리코",
+        "code": 630,
+        "alpha-3": "PRI"
+    },
+    {
+        "key": "FR",
+        "label": "프랑스",
+        "code": 250,
+        "alpha-3": "FRA"
+    },
+    {
+        "key": "GF",
+        "label": "프랑스령 기아나",
+        "code": 254,
+        "alpha-3": "GUF"
+    },
+    {
+        "key": "TF",
+        "label": "프랑스령 남방 및 남극 지역",
+        "code": 260,
+        "alpha-3": "ATF"
+    },
+    {
+        "key": "PF",
+        "label": "프랑스령 폴리네시아",
+        "code": 258,
+        "alpha-3": "PYF"
+    },
+    {
+        "key": "FJ",
+        "label": "피지",
+        "code": 242,
+        "alpha-3": "FJI"
+    },
+    {
+        "key": "FI",
+        "label": "핀란드",
+        "code": 246,
+        "alpha-3": "FIN"
+    },
+    {
+        "key": "PH",
+        "label": "필리핀",
+        "code": 608,
+        "alpha-3": "PHL"
+    },
+    {
+        "key": "PN",
+        "label": "핏케언 제도",
+        "code": 612,
+        "alpha-3": "PCN"
+    },
+    {
+        "key": "HM",
+        "label": "허드 맥도널드 제도",
+        "code": 334,
+        "alpha-3": "HMD"
+    },
+    {
+        "key": "HU",
+        "label": "헝가리",
+        "code": 348,
+        "alpha-3": "HUN"
+    },
+    {
+        "key": "HK",
+        "label": "홍콩",
+        "code": 344,
+        "alpha-3": "HKG"
+    }
+]

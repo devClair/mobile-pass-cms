@@ -22,6 +22,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Paper,
 } from "@material-ui/core";
 
 // components
@@ -98,7 +99,10 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing(3),
+    padding: theme.spacing(2),
+    "@media (min-width: 1280px)": {
+      padding: theme.spacing(5),
+    },
   },
   /* custom */
   listItem: {
@@ -120,7 +124,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Layout = (props) => {
-  const { children, headerComponent, currentPath } = props;
+  const { children, headerComponent, locationPathname } = props;
   const classes = useStyles();
   // const dispatch = useDispatch();
   // dispatch({ type: "SET_PAGE_KEY", payload: "" });
@@ -128,14 +132,17 @@ const Layout = (props) => {
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
-        <LoadingProgress></LoadingProgress>
         <CssBaseline />
         <Header drawerWidth={drawerWidth} headerComponent={headerComponent} />
-        <Sidebar drawerWidth={drawerWidth} currentPath={currentPath} />
+        <Sidebar
+          drawerWidth={drawerWidth}
+          locationPathname={locationPathname}
+        />
         <main className={classes.content}>
           {/* <div className={classes.toolbar} /> */}
           <Toolbar />
-          {children}
+
+          <Paper>{children}</Paper>
         </main>
       </div>
     </ThemeProvider>

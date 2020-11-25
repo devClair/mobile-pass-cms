@@ -1,6 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
-import { Grid, Checkbox, Button, Box, Typography } from "@material-ui/core";
+import {
+  Grid,
+  Checkbox,
+  Button,
+  Box,
+  Typography,
+  Select,
+  MenuItem,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Wrapper from "./styles";
 
@@ -18,9 +26,9 @@ import {
   TableHeaderSortSpan,
   SearchFilter,
   DatePicker,
-  TypeSelectMenu,
+  SelectComponent,
+  ButtonGroupComponent,
 } from "../../../components/table-header-column";
-import { SelectComponent } from "../../../components/table-row-component";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
@@ -30,80 +38,66 @@ import { useViewLogic } from "./viewLogic";
 
 // react-data-export
 import ReactExport from "react-data-export";
+
+// react-hook-form
+import { useForm, FormProvider } from "react-hook-form";
+import { DevTool } from "@hookform/devtools";
+
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 const useStyles = makeStyles((theme) => ({
-  upload_button: {
-    color: "white",
-    backgroundColor: "rgba(76,175,80,1.0)",
-  },
-  formControl: {
-    // maxHeight: 16.5,
-    "& .MuiOutlinedInput-input": {
-      paddingTop: "16.5px",
-      paddingBottom: "16.5px",
-    },
-  },
-  api_help: {
-    color: "#ec407a !important",
-  },
   checkbox: {
     // height: "unset!important",
     // marginTop: "5px",
     color: "rgba(0, 0, 0, 0.54)!important",
   },
-  default_text: {
-    width: "264",
-    paddingLeft: "5",
-    color: "rgb(200, 200, 200)!important",
-  },
 }));
 
-const HeaderComponent = () => {
-  const [current, setCurrent] = useState(0);
+const HeaderComponent = (props) => {
+  const reducer = useSelector((state) => state.reducer);
+  const user = reducer.user;
+  const dispatch = useDispatch();
+  const { filter_list_type } = props;
 
-  const menuItems = [
-    {
-      key: "일반회원",
-      value: "client_user",
-    },
-    {
-      key: "사업자회원",
-      value: "business_user",
-    },
-  ];
   return (
     <SelectComponent
-      isEditable={true}
-      // currentValue={lecture.lecture_department_no}
-      currentValue={current}
-      onChange={(event) => {
-        setCurrent(event.target.value);
+      className="outlinedCustom"
+      variant="outlined"
+      items={filter_list_type.map((x) => reducer.filter_list_type[x])}
+      current={user.list_params.filter_list_type}
+      onChange={(item) => {
+        dispatch({
+          type: "SET_HADER_LIST_PARAMS",
+          payload: {
+            reducer_type: "user",
+            list_params: {
+              filter_list_type: item.key,
+              current_page: 1,
+            },
+          },
+        });
       }}
-      menuItems={menuItems?.map((x) => {
-        return {
-          key: x.key,
-          value: x.value,
-        };
-      })}
     />
-    // <Typography variant="h6" noWrap color="primary">
-    //   일반회원
-    // </Typography>
   );
 };
 
 const List = (props) => {
   const { match, location } = props;
-  let currentPath = location.pathname;
-
+  let locationPathname = location.pathname;
   const classes = useStyles();
 
   const reducer = useSelector((state) => state.reducer);
-  const dispatch = useDispatch();
   const user = reducer.user;
+  const dispatch = useDispatch();
   const history = useHistory();
   const { save } = useViewLogic();
+
+  const methods = useForm({
+    defaultValues: {
+      user_type: "client_user",
+    },
+  });
+  const { watch, setValue, handleSubmit, reset } = methods;
 
   const tableColumns = [
     {
@@ -180,29 +174,64 @@ const List = (props) => {
     //   ),
     // },
   ];
+  const [state, setState] = useState({
+    orderColumn: [],
+    filter_column: { key: "", value: [] },
+  });
 
-  const onChangeTypeSeletMenu = ({ index, key, value, type }) => {
+  const listParams = [
+    {
+      filter_list_type: "client_user",
+      order_column: ["user_name", "email"],
+      filter_column: { key: "filter_gender", value: ["all", "male", "female"] },
+    },
+    {
+      filter_list_type: "business_user",
+      order_column: ["trade_name", "history", "join_dt"],
+      filter_column: {
+        key: "filter_is_approved",
+        value: ["all", "awating", "approved"],
+      },
+    },
+  ];
+
+  const onChangeOrderColumn = (item) => {
     dispatch({
       type: "SET_HADER_LIST_PARAMS",
       payload: {
         reducer_type: "user",
         list_params: {
-          user_type: type !== "all" ? type : null,
+          order_column: item.key,
           // order_type,
-          // current_page: 1,
+          current_page: 1,
         },
       },
     });
   };
 
-  const onChangeOrderColumn = ({ order_column, order_type }) => {
+  const onChangeFilterCountryCode = (item) => {
     dispatch({
       type: "SET_HADER_LIST_PARAMS",
       payload: {
         reducer_type: "user",
         list_params: {
-          order_column,
-          order_type,
+          filter_country_code: item.key,
+          // order_type,
+          current_page: 1,
+        },
+      },
+    });
+  };
+
+  const onChangeFilterColumn = (item) => {
+    console.log({ item });
+    console.log({ state });
+    dispatch({
+      type: "SET_HADER_LIST_PARAMS",
+      payload: {
+        reducer_type: "user",
+        list_params: {
+          [state.filter_column.key]: item.key,
           current_page: 1,
         },
       },
@@ -235,54 +264,105 @@ const List = (props) => {
       },
     });
   };
+  // console.log(user.list_params.list_type);
+  // console.log(reducer.order_column.user[user.list_params.list_type]);
 
   const tableHeaderColumns = [
+    // {
+    //   component: (
+    //     <TypeSelectMenu
+    //       className="outlinedCustom"
+    //       variant="outlined"
+    //       type_data={menuItems}
+    //       list_param
+    //       onChange={(item) => {
+    //         dispatch({
+    //           type: "SET_HADER_LIST_PARAMS",
+    //           payload: {
+    //             reducer_type: "user",
+    //             list_params: {
+    //               user_type: item.value !== "all" ? item.value : null,
+    //               current_page: 1,
+    //             },
+    //           },
+    //         });
+    //       }}
+    //     />
+    //   ),
+    // },
+
     {
-      component: (
-        <TypeSelectMenu
-          type_data={reducer.user_type_data}
-          onChange={onChangeTypeSeletMenu}
-        />
-      ),
+      // component: (
+      //   <OrderSelectMenu
+      //     list_type={user.list_params.list_type}
+      //     order_column={user.list_params.order_column}
+      //     order_data={reducer.order_column.user}
+      //     reducer_key="user"
+      //     onChange={onChangeOrderColumn}
+      //   />
+      // ),
     },
     {
       component: (
-        <TableHeaderSortSpan
-          order_key="user_name"
-          order_data={reducer.sort_span_dic["user_name"]}
-          order_column={user?.list_params?.order_column}
+        <SelectComponent
+          className="outlinedCustom"
+          variant="outlined"
+          items={state.orderColumn.map((x) => reducer.order_column[x])}
+          current={user.list_params.order_column}
           onChange={onChangeOrderColumn}
         />
       ),
     },
     {
       component: (
-        <TableHeaderSortSpan
-          order_key="createdAt"
-          order_data={reducer.sort_span_dic["createdAt"]}
-          order_column={user?.list_params?.order_column}
-          onChange={onChangeOrderColumn}
+        <SelectComponent
+          className="outlinedCustom"
+          variant="outlined"
+          items={reducer.filter_country_code}
+          current={user.list_params.filter_country_code}
+          onChange={onChangeFilterCountryCode}
         />
       ),
     },
     {
       component: (
-        <TableHeaderSortSpan
-          order_key="lecturer_status"
-          order_data={reducer.sort_span_dic["lecturer_status"]}
-          order_column={user?.list_params?.order_column}
-          onChange={onChangeOrderColumn}
+        <ButtonGroupComponent
+          items={state.filter_column.value.map(
+            (x) => reducer[state.filter_column.key][x]
+          )}
+          current={user.list_params[state.filter_column.key]}
+          onClick={onChangeFilterColumn}
         />
       ),
     },
-    {
-      component: (
-        <DatePicker
-          filter_dt={user.list_params.filter_end_dt}
-          onChange={onChangeDateColumn}
-        />
-      ),
-    },
+    // {
+    //   component: (
+    //     <TableHeaderSortSpan
+    //       order_key="createdAt"
+    //       order_data={reducer.sort_span_dic["createdAt"]}
+    //       order_column={user?.list_params?.order_column}
+    //       onChange={onChangeOrderColumn}
+    //     />
+    //   ),
+    // },
+    // {
+    //   component: (
+    //     <TableHeaderSortSpan
+    //       order_key="lecturer_status"
+    //       order_data={reducer.sort_span_dic["lecturer_status"]}
+    //       order_column={user?.list_params?.order_column}
+    //       onChange={onChangeOrderColumn}
+    //     />
+    //   ),
+    // },
+    // {
+    //   component: (
+    //     <DatePicker
+    //       filter_dt={user.list_params.filter_end_dt}
+    //       onChange={onChangeDateColumn}
+    //     />
+    //   ),
+    // },
     // {
     //   component: (
     //     <SearchFilter
@@ -319,44 +399,111 @@ const List = (props) => {
     return await save();
   };
 
+  const mounted = useRef(false);
+  useEffect(() => {
+    let changedByFilterListType = listParams.find(
+      (x) => x.filter_list_type === user.list_params.filter_list_type
+    );
+    setState({
+      ...state,
+      orderColumn: changedByFilterListType.order_column,
+      filter_column: changedByFilterListType.filter_column,
+    });
+    if (!mounted.current) {
+      mounted.current = true;
+    } else {
+      // const listParams = [
+      //   {
+      //     filter_list_type: "client_user",
+      //     order_column: ["user_name", "email"],
+      //     filter_column: {
+      //       key: "filter_gender",
+      //       value: ["all", "male", "female"],
+      //     },
+      //   },
+      //   {
+      //     filter_list_type: "business_user",
+      //     order_column: ["trade_name", "history", "join_dt"],
+      //     filter_column: {
+      //       key: "filter_is_approved",
+      //       value: ["all", "awating", "approved"],
+      //     },
+      //   },
+      // ];
+      //   filter_list_type: "client_user",
+      // order_column: "user_name",
+      // filter_country_code: "KR",
+      // filter_gender: "all",
+      // filter_is_approved: "all",
+      // current_page: 1,
+      const [filter_gender, filter_is_approved] = listParams.map((x) => {
+        return {
+          [x.filter_column.key]: x.filter_column.value[0],
+        };
+      });
+
+      dispatch({
+        type: "SET_HADER_LIST_PARAMS",
+        payload: {
+          reducer_type: "user",
+          list_params: {
+            order_column: changedByFilterListType.order_column[0],
+            ...filter_gender,
+            ...filter_is_approved,
+            // [changedByFilterListType.filter_column.key]:
+            //   changedByFilterListType.filter_column.value[0],
+            current_page: 1,
+          },
+        },
+      });
+    }
+  }, [user.list_params.filter_list_type]);
+
   return (
-    <Layout headerComponent={<HeaderComponent />} currentPath={currentPath}>
-      <Wrapper>
-        <Grid className="customer">
-          <Grid className="table_wrap">
-            <TableHeader
-              titleComponent={<Breadcrumb title="회원 관리" text="" />}
-              columns={tableHeaderColumns}
+    <>
+      <FormProvider {...methods}>
+        <Layout
+          headerComponent={
+            <HeaderComponent
+              filter_list_type={listParams.map((x) => x.filter_list_type)}
             />
-            <Grid className="table">
-              <Table
+          }
+          locationPathname={locationPathname}
+        >
+          <Grid className="customer">
+            <Grid className="table_wrap">
+              <TableHeader columns={tableHeaderColumns} searchComponent />
+              <Grid className="table">
+                <Table
+                  data={user.user_data.data}
+                  columns={tableColumns}
+                  onRowClick={onRowClick}
+                  options={{
+                    pageSize: 10,
+                    paging: true,
+                  }}
+                />
+              </Grid>
+              <TableFooter
                 data={user.user_data.data}
-                columns={tableColumns}
-                onRowClick={onRowClick}
-                options={{
-                  pageSize: 10,
-                  paging: true,
-                }}
-              />
+                count={user.user_data.total_page}
+                page={
+                  user.list_params.current_page
+                    ? user.list_params.current_page
+                    : 1
+                }
+                excel={true}
+                onChangeCallback={onPageNoClick}
+                createButton={false}
+                goToCreate={goToCreate}
+                onExcelDownload={onClickExcelButton}
+              ></TableFooter>
             </Grid>
-            <TableFooter
-              data={user.user_data.data}
-              count={user.user_data.total_page}
-              page={
-                user.list_params.current_page
-                  ? user.list_params.current_page
-                  : 1
-              }
-              excel={true}
-              onChangeCallback={onPageNoClick}
-              createButton={false}
-              goToCreate={goToCreate}
-              onExcelDownload={onClickExcelButton}
-            ></TableFooter>
           </Grid>
-        </Grid>
-      </Wrapper>
-    </Layout>
+        </Layout>
+      </FormProvider>
+      <DevTool control={methods.control} />
+    </>
   );
 };
 export default List;

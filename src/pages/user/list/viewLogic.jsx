@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 // apiObject
-import { apiObject } from "../../../api";
+import { apiObject, apiObjectMobilePass } from "../../../api";
 import { Storage } from "@psyrenpark/storage";
 import { v4 as uuidv4 } from "uuid";
 
@@ -106,8 +106,30 @@ export const useViewLogic = () => {
     return file_url;
   };
 
+  const test = async () => {
+    try {
+      let responseApiObjectMobilePass = await apiObjectMobilePass.getTest(
+        {},
+        loadingFunction
+      );
+      // console.log("list -> data", JSON.stringify(data));
+
+      console.log({ responseApiObjectMobilePass });
+
+      console.log("LIST_CMS_LECTURES -> success");
+    } catch (error) {
+      // alert(error);
+      console.log("Error", error);
+      console.log("Error", error.code);
+      console.log("Error", error.message);
+      console.log("Error", error.response.data);
+    }
+  };
+
   useEffect(() => {
     list();
+    test();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.list_params]);
 

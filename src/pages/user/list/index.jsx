@@ -12,7 +12,8 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import Wrapper from "./styles";
 
-import { Route, useHistory, Link } from "react-router-dom";
+// react-router-dom
+import { Route, useHistory } from "react-router-dom";
 
 // layout
 import Layout from "../../../layout";

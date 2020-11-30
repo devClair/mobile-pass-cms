@@ -2858,3 +2858,15 @@ exports.apiObject = {
     return Api.put(apiName, path, myInit, LoadingCallback);
   },
 };
+
+exports.apiObjectMobilePass = {
+  getTest: () => {
+    return Api.getAxios().get(
+      "https://fak0zv2jei.execute-api.ap-northeast-1.amazonaws.com/sp-prod-api-stage/v1/SPCMS_00003"
+    );
+  },
+
+  getTest2: ({ test, test2 }) => {
+    return Api.getAxios().get("https://www.naver.com");
+  },
+};

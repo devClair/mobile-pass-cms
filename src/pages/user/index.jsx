@@ -8,6 +8,7 @@ import List from "./list";
 
 const RoutingContainer = (props) => {
   const { match } = props;
+  // console.log("RoutingContainer");
 
   return (
     <>

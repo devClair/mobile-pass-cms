@@ -78,7 +78,7 @@ import {
 import { apiObject } from "../../../api";
 
 const useStyles = makeStyles((theme) => ({
-  outlinedCustom: {
+  selectOutlined: {
     // maxHeight: 16.5,
     "& .MuiOutlinedInput-input": {
       paddingTop: 14,
@@ -533,7 +533,7 @@ const SelectComponent = (props) => {
       as={
         isEditable ? (
           <Select
-            className={classes.outlinedCustom}
+            className={classes.selectOutlined}
             // variant="outlined"
             readOnly={!isEditable}
           >

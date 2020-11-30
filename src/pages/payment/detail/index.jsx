@@ -91,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     backgroundColor: "rgba(76,175,80,1.0)",
   },
-  outlinedCustom: {
+  selectOutlined: {
     marginTop: "10px",
     marginBottom: "10px",
     // maxHeight: 16.5,

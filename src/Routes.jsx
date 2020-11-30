@@ -53,7 +53,8 @@ Date.prototype.yyyymmdd = function () {
 };
 
 const Routes = () => {
-  const reducer = useSelector((state) => state.reducer);
+  // console.log("Routes");
+  const userState = useSelector((state) => state.reducer.userState);
   const dispatch = useDispatch();
   const loadingFunction = useLoadingFunction();
 
@@ -104,11 +105,11 @@ const Routes = () => {
     // 정규식 필요
     checkAuth();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reducer.userState]);
+  }, [userState]);
 
   return (
     <div>
-      {reducer.userState !== UserState.SIGNED ? (
+      {userState !== UserState.SIGNED ? (
         <BrowserRouter>
           <Switch>
             <Route path="/" exact component={Login} />

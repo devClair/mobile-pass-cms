@@ -88,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     backgroundColor: "rgba(76,175,80,1.0)",
   },
-  outlinedCustom: {
+  selectOutlined: {
     // maxHeight: 16.5,
     "& .MuiOutlinedInput-input": {
       paddingTop: 14,

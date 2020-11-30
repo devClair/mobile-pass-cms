@@ -68,7 +68,7 @@ import {
 } from "../../../components/table-row-component";
 
 const useStyles = makeStyles((theme) => ({
-  outlinedCustom: {
+  selectOutlined: {
     // maxHeight: 16.5,
     "& .MuiOutlinedInput-input": {
       paddingTop: 14,

@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     backgroundColor: "rgba(76,175,80,1.0)",
   },
-  outlinedCustom: {
+  selectOutlined: {
     "& fieldset": {
       border: 0,
     },
@@ -180,7 +180,7 @@ export const SelectComponent = (props) => {
     <>
       {isEditable ? (
         <Select
-          className={classes.outlinedCustom}
+          className={classes.selectOutlined}
           variant="outlined"
           value={currentValue}
           onChange={onChange}
@@ -233,7 +233,7 @@ export const TextFieldComponent = (props) => {
   return (
     <>
       <TextField
-        className={classes.outlinedCustom}
+        className={classes.selectOutlined}
         variant="outlined"
         placeholder={isEditable && placeholder}
         value={value}
@@ -292,7 +292,7 @@ export const DatePickerComponent = (props) => {
               <KeyboardDatePicker
                 variant="inline"
                 inputVariant="outlined"
-                className={classes.outlinedCustom}
+                className={classes.selectOutlined}
                 allowKeyboardControl={true}
                 value={value}
                 onChange={onChange}
@@ -361,7 +361,7 @@ export const SearchFieldComponent = (props) => {
         </Box>
       ) : (
         <TextField
-          className={classes.outlinedCustom}
+          className={classes.selectOutlined}
           variant="outlined"
           // value={value.name}
           value={value.map((x) => {
@@ -405,7 +405,7 @@ export const SearchAndChips = (props) => {
             <Grid item xs={12}>
               <Box px={2} py={1} className={classes.add}>
                 <TextField
-                  // className={classes.outlinedCustom}
+                  // className={classes.selectOutlined}
                   value={value}
                   onChange={(e) => {
                     setValue(e.target.value);
@@ -578,7 +578,7 @@ export const ChipsArrayComponent = (props) => {
         </Box>
       ) : (
         <TextField
-          className={classes.outlinedCustom}
+          className={classes.selectOutlined}
           variant="outlined"
           value={value.name}
           inputProps={{

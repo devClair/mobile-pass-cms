@@ -115,163 +115,29 @@ const TableHeader = (props) => {
     <Grid container justify="space-between" className={classes.tableHeader}>
       <Grid item>
         <Grid container justify="flex-start">
-          {/* <Grid className="content">{children}</Grid> */}
-
-          {columns.map((column, index) => {
-            return (
-              <Grid
-                // spacing={1}
-                className={classes.column_item}
-                key={index}
-              >
-                {column.component}
-              </Grid>
-            );
-          })}
-
-          {/* {sortTab === true && (
-            <Grid item className="sort_item">
-              {reducer_path.sort_tab_data.map((x, index) => {
-                return (
-                  <span
-                    key={index}
-                    className={
-                      reducer_path.list_params.order_column ===
-                        x.order_column &&
-                      reducer_path.list_params.order_type === x.order_type
-                        ? "option on"
-                        : "option"
-                    }
-                    onClick={() => {
-                      changeItem(index);
-                      dispatch({
-                        type: "SET_LIST_PARAMS",
-                        payload: {
-                          list_params: {
-                            order_column: x.order_column,
-                            order_type: x.order_type,
-                            current_page: 1,
-                          },
-                          path: path,
-                        },
-                      });
-                    }}
-                  >
-                    {x.value}
-                  </span>
-                );
-              })}
-            </Grid>
-          )}
-          {dateFilter && (
-            <Grid item className="picker_wrap">
-              <Grid className="date">
-                <Picker
-                  value={reducer_path.list_params.filter_end_dt}
-                  onChange={(e) => {
-                    const today = new Date();
-                    dispatch({
-                      type: "SET_LIST_PARAMS",
-                      payload: {
-                        list_params: {
-                          filter_begin_dt: startOfMonth(e),
-                          filter_end_dt:
-                            format(endOfMonth(e), "yyyy-MM-dd") ===
-                            format(endOfMonth(today), "yyyy-MM-dd")
-                              ? endOfToday()
-                              : endOfMonth(e),
-                          current_page: 1,
-                        },
-                        path: path,
-                      },
-                    });
-                  }}
-                />
-              </Grid>
-            </Grid>
-          )}
-          {searchFilter && (
-            <Grid item className="picker_wrap">
-              <Grid className="date">
-                <FormControl margin="dense">
-                  <Select
-                    value={reducer_path.list_params.search_type}
-                    onChange={(event) => {
-                      dispatch({
-                        type: "SET_LIST_PARAMS",
-                        payload: {
-                          list_params: {
-                            search_type: reducer_path.search_type_data.filter(
-                              (x) => x.search_column === event.target.value
-                            )[0].search_column,
-                          },
-                          path: path,
-                        },
-                      });
-                    }}
-                  >
-                    {reducer_path.search_type_data.map((x, index) => {
-                      return (
-                        <MenuItem value={x.search_column} key={x.key}>
-                          {x.value}
-                        </MenuItem>
-                      );
-                    })}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid className="divider"></Grid>
-              <Grid className="date">
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <SearchIcon />
-                  </div>
-                  <InputBase
-                    placeholder="Search…"
-                    classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput,
-                    }}
-                    inputProps={{ "aria-label": "search" }}
-                    value={tempSearchText}
-                    onChange={(e) => {
-                      console.log(
-                        "TableHeader -> e.target.value",
-                        e.target.value
-                      );
-                      setTempSearchText(e.target.value);
-                    }}
-                  />
-                </div>
-              </Grid>
-              <Grid className="date">
-                <Button
-                  variant="contained"
-                  onClick={() => {
-                    dispatch({
-                      type: "SET_LIST_PARAMS",
-                      payload: {
-                        list_params: {
-                          search_text: tempSearchText,
-                          current_page: 1,
-                        },
-                        path: path,
-                      },
-                    });
-                  }}
-                >
-                  검색
-                </Button>
-              </Grid>
-            </Grid>
-          )} */}
+          {columns
+            .filter((x) => x.position === "left")
+            .map((column, index) => {
+              return (
+                <Grid key={index} className={classes.column_item}>
+                  {column.component}
+                </Grid>
+              );
+            })}
         </Grid>
       </Grid>
       <Grid item>
-        {/* {searchComponent && <SearchFilter
-          search_type_data={lecture.search_type_data}
-          onChange={onChangeSearchColumn}
-        />}         */}
+        <Grid container justify="flex-end">
+          {columns
+            .filter((x) => x.position === "right")
+            .map((column, index) => {
+              return (
+                <Grid key={index} className={classes.column_item}>
+                  {column.component}
+                </Grid>
+              );
+            })}
+        </Grid>
       </Grid>
     </Grid>
   );

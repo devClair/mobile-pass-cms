@@ -60,6 +60,20 @@ const theme = createMuiTheme({
         color: "white",
       },
     },
+    // MuiOutlinedInput: {
+    //   root: {
+    //     "&:hover": {
+    //       "& .MuiOutlinedInput-notchedOutline": {
+    //         borderColor: "",
+    //       },
+    //     },
+    //     "&.Mui-focused": {
+    //       "& .MuiOutlinedInput-notchedOutline": {
+    //         borderColor: "#00479c",
+    //       },
+    //     },
+    //   },
+    // },
   },
   typography: {
     fontFamily: ["Noto Sans KR", "Montserrat", "sans-serif"].join(","),

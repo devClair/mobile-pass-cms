@@ -24,7 +24,7 @@ import Table from "../../../components/table";
 import TableFooter from "../../../components/table-footerV2";
 import {
   TableHeaderSortSpan,
-  SearchFilter,
+  SearchComponent,
   DatePicker,
   SelectComponent,
   ButtonGroupComponent,
@@ -61,7 +61,7 @@ const HeaderComponent = (props) => {
 
   return (
     <SelectComponent
-      className="outlinedCustom"
+      className="selectOutlined"
       variant="outlined"
       items={filter_list_type.map((x) => reducer.filter_list_type[x])}
       current={user.list_params.filter_list_type}
@@ -83,6 +83,12 @@ const HeaderComponent = (props) => {
 
 const List = (props) => {
   const { match, location } = props;
+
+  useEffect(() => {
+    console.log("render");
+  }, []);
+  // console.log("List");
+
   let locationPathname = location.pathname;
   const classes = useStyles();
 
@@ -177,21 +183,25 @@ const List = (props) => {
   const [state, setState] = useState({
     orderColumn: [],
     filter_column: { key: "", value: [] },
+    search_filter: [],
+    search_text: "",
   });
 
   const listParams = [
     {
       filter_list_type: "client_user",
-      order_column: ["user_name", "email"],
+      order_column: ["user_name", "birth"],
       filter_column: { key: "filter_gender", value: ["all", "male", "female"] },
+      search_filter: ["user_name", "email", "remarks"],
     },
     {
       filter_list_type: "business_user",
-      order_column: ["trade_name", "history", "join_dt"],
+      order_column: ["business_name", "history", "join_dt"],
       filter_column: {
         key: "filter_is_approved",
         value: ["all", "awating", "approved"],
       },
+      search_filter: ["business_name", "business_license_number", "remarks"],
     },
   ];
 
@@ -224,8 +234,8 @@ const List = (props) => {
   };
 
   const onChangeFilterColumn = (item) => {
-    console.log({ item });
-    console.log({ state });
+    // console.log({ item });
+    // console.log({ state });
     dispatch({
       type: "SET_HADER_LIST_PARAMS",
       payload: {
@@ -252,13 +262,30 @@ const List = (props) => {
     });
   };
 
-  const onChangeSearchColumn = ({ searchText, menuItem }) => {
+  const onChangeSearchFilter = (item) => {
     dispatch({
       type: "SET_HADER_LIST_PARAMS",
       payload: {
         reducer_type: "user",
         list_params: {
-          [menuItem]: searchText,
+          search_filter: item.key,
+          // order_type,
+          current_page: 1,
+        },
+      },
+    });
+  };
+
+  const onSubmitSearchText = (params) => {
+    // console.log({ value });
+    dispatch({
+      type: "SET_HADER_LIST_PARAMS",
+      payload: {
+        reducer_type: "user",
+        list_params: {
+          search_filter: params.search_filter,
+          search_text: params.search_text,
+          // order_type,
           current_page: 1,
         },
       },
@@ -268,61 +295,31 @@ const List = (props) => {
   // console.log(reducer.order_column.user[user.list_params.list_type]);
 
   const tableHeaderColumns = [
-    // {
-    //   component: (
-    //     <TypeSelectMenu
-    //       className="outlinedCustom"
-    //       variant="outlined"
-    //       type_data={menuItems}
-    //       list_param
-    //       onChange={(item) => {
-    //         dispatch({
-    //           type: "SET_HADER_LIST_PARAMS",
-    //           payload: {
-    //             reducer_type: "user",
-    //             list_params: {
-    //               user_type: item.value !== "all" ? item.value : null,
-    //               current_page: 1,
-    //             },
-    //           },
-    //         });
-    //       }}
-    //     />
-    //   ),
-    // },
-
-    {
-      // component: (
-      //   <OrderSelectMenu
-      //     list_type={user.list_params.list_type}
-      //     order_column={user.list_params.order_column}
-      //     order_data={reducer.order_column.user}
-      //     reducer_key="user"
-      //     onChange={onChangeOrderColumn}
-      //   />
-      // ),
-    },
     {
       component: (
         <SelectComponent
-          className="outlinedCustom"
+          className="outlinedCustomHeader"
           variant="outlined"
           items={state.orderColumn.map((x) => reducer.order_column[x])}
           current={user.list_params.order_column}
           onChange={onChangeOrderColumn}
+          label="정렬"
         />
       ),
+      position: "left",
     },
     {
       component: (
         <SelectComponent
-          className="outlinedCustom"
+          className="outlinedCustomHeader"
           variant="outlined"
           items={reducer.filter_country_code}
           current={user.list_params.filter_country_code}
           onChange={onChangeFilterCountryCode}
+          label="국가"
         />
       ),
+      position: "left",
     },
     {
       component: (
@@ -334,40 +331,30 @@ const List = (props) => {
           onClick={onChangeFilterColumn}
         />
       ),
+      position: "left",
     },
-    // {
-    //   component: (
-    //     <TableHeaderSortSpan
-    //       order_key="createdAt"
-    //       order_data={reducer.sort_span_dic["createdAt"]}
-    //       order_column={user?.list_params?.order_column}
-    //       onChange={onChangeOrderColumn}
-    //     />
-    //   ),
-    // },
-    // {
-    //   component: (
-    //     <TableHeaderSortSpan
-    //       order_key="lecturer_status"
-    //       order_data={reducer.sort_span_dic["lecturer_status"]}
-    //       order_column={user?.list_params?.order_column}
-    //       onChange={onChangeOrderColumn}
-    //     />
-    //   ),
-    // },
+    {
+      component: (
+        <SearchComponent
+          // search_type_data={user.search_type_data}
+          items={state.search_filter.map((x) => reducer.search_filter[x])}
+          reducer_key="user"
+          current={{
+            search_filter: user.list_params.search_filter,
+            search_text: user.list_params.search_text,
+          }}
+          // onChange={onChangeSearchFilter}
+          onSubmit={onSubmitSearchText}
+        />
+      ),
+      position: "right",
+    },
+
     // {
     //   component: (
     //     <DatePicker
     //       filter_dt={user.list_params.filter_end_dt}
     //       onChange={onChangeDateColumn}
-    //     />
-    //   ),
-    // },
-    // {
-    //   component: (
-    //     <SearchFilter
-    //       search_type_data={user.search_type_data}
-    //       onChange={onChangeSearchColumn}
     //     />
     //   ),
     // },
@@ -401,41 +388,23 @@ const List = (props) => {
 
   const mounted = useRef(false);
   useEffect(() => {
+    console.log("[user.list_params.filter_list_type]");
+
     let changedByFilterListType = listParams.find(
       (x) => x.filter_list_type === user.list_params.filter_list_type
     );
+
     setState({
       ...state,
       orderColumn: changedByFilterListType.order_column,
       filter_column: changedByFilterListType.filter_column,
+      search_filter: changedByFilterListType.search_filter,
+      search_text: changedByFilterListType.search_text,
     });
+
     if (!mounted.current) {
       mounted.current = true;
     } else {
-      // const listParams = [
-      //   {
-      //     filter_list_type: "client_user",
-      //     order_column: ["user_name", "email"],
-      //     filter_column: {
-      //       key: "filter_gender",
-      //       value: ["all", "male", "female"],
-      //     },
-      //   },
-      //   {
-      //     filter_list_type: "business_user",
-      //     order_column: ["trade_name", "history", "join_dt"],
-      //     filter_column: {
-      //       key: "filter_is_approved",
-      //       value: ["all", "awating", "approved"],
-      //     },
-      //   },
-      // ];
-      //   filter_list_type: "client_user",
-      // order_column: "user_name",
-      // filter_country_code: "KR",
-      // filter_gender: "all",
-      // filter_is_approved: "all",
-      // current_page: 1,
       const [filter_gender, filter_is_approved] = listParams.map((x) => {
         return {
           [x.filter_column.key]: x.filter_column.value[0],
@@ -452,6 +421,8 @@ const List = (props) => {
             ...filter_is_approved,
             // [changedByFilterListType.filter_column.key]:
             //   changedByFilterListType.filter_column.value[0],
+            search_filter: changedByFilterListType.search_filter[0],
+            search_text: "",
             current_page: 1,
           },
         },

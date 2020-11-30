@@ -200,7 +200,7 @@ export const SelectComponent = (props) => {
     <Controller
       as={
         <Select
-          className={classes.outlinedCustom}
+          className={classes.selectOutlined}
           variant="outlined"
           // disabled={!isEditable}
         >
@@ -228,7 +228,7 @@ export const SelectComponent = (props) => {
 //     <>
 //       {isEditable ? (
 //         <Select
-//           className={classes.outlinedCustom}
+//           className={classes.selectOutlined}
 //           variant="outlined"
 //           value={currentValue}
 //           onChange={onChange}
@@ -286,7 +286,7 @@ export const TextFieldComponent = (props) => {
     <Controller
       as={
         <TextField
-          className={classes.outlinedCustom}
+          className={classes.selectOutlined}
           variant="outlined"
           // inputRef={register({
           //   required: true,
@@ -336,7 +336,7 @@ export const TextFieldComponent = (props) => {
 //   return (
 //     <>
 //       <TextField
-//         className={classes.outlinedCustom}
+//         className={classes.selectOutlined}
 //         variant="outlined"
 //         placeholder={placeholder}
 //         value={value}
@@ -395,7 +395,7 @@ export const DatePickerComponent = (props) => {
               <KeyboardDatePicker
                 variant="inline"
                 inputVariant="outlined"
-                className={classes.outlinedCustom}
+                className={classes.selectOutlined}
                 allowKeyboardControl={true}
                 value={value}
                 onChange={onChange}
@@ -542,7 +542,7 @@ export const SearchAndChips = (props) => {
             <Grid item xs={12}>
               <Box px={2} py={1} className={classes.add}>
                 <TextField
-                  // className={classes.outlinedCustom}
+                  // className={classes.selectOutlined}
                   value={value}
                   onChange={(e) => {
                     setValue(e.target.value);
@@ -728,7 +728,7 @@ export const ChipsArrayComponent = (props) => {
         </Box>
       ) : (
         <TextField
-          className={classes.outlinedCustom}
+          className={classes.selectOutlined}
           variant="outlined"
           value={value.name}
           inputProps={{

@@ -20,6 +20,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 // material-ui/core
 import { Grid, AppBar, Toolbar, Typography, Button } from "@material-ui/core";
+import { useTheme } from "styled-components";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {

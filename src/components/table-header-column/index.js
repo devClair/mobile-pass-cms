@@ -62,13 +62,14 @@ const useStyles = makeStyles((theme) => ({
   search_grid: {
     cursor: "pointer",
   },
-  outlinedCustom: {
+  selectOutlined: {
     color: theme.palette.primary.main,
     "& .MuiOutlinedInput-input": {
       paddingTop: 14,
       paddingBottom: 16,
       background: "white",
       fontWeight: "500",
+      width: 96,
     },
     "& fieldset": {
       borderWidth: "2px !important",
@@ -77,6 +78,72 @@ const useStyles = makeStyles((theme) => ({
       },
     },
     // maxHeight: 16.5,
+  },
+  headerContainer: {
+    border: `solid 1px ${theme.palette.grey[300]}`,
+    borderRadius: 4,
+  },
+  headerItemLabel: {
+    width: 56,
+    background: theme.palette.grey[200],
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: theme.palette.grey[500],
+    borderRadius: "4px 0 0 4px",
+  },
+  outlinedCustomHeader: {
+    "& .MuiOutlinedInput-input": {
+      paddingTop: 10,
+      paddingBottom: 11,
+      background: "white",
+      minWidth: 64,
+      // fontWeight: "500",
+    },
+    "& fieldset": {
+      border: "none",
+    },
+  },
+  buttonOutlinedCustom: {
+    "& .MuiButton-outlined": {
+      borderColor: theme.palette.grey[300],
+    },
+  },
+  searchFilter: {
+    "& .MuiOutlinedInput-input": {
+      paddingTop: 12,
+      paddingBottom: 13,
+      background: theme.palette.grey[200],
+      color: theme.palette.grey[500],
+    },
+    "& fieldset": {
+      borderWidth: "1px !important",
+      borderRight: "none",
+      borderRadius: "4px 0 0 4px",
+      "&.MuiOutlinedInput-notchedOutline": {
+        borderColor: `${theme.palette.grey[300]} !important`,
+      },
+    },
+  },
+  searchText: {
+    borderRadius: "0 4px 4px 0",
+    paddingLeft: "8px",
+    "& svg": {
+      cursor: "pointer",
+    },
+    "& .MuiInputAdornment-positionStart": {
+      // color: theme.palette.grey[500],
+      color: theme.palette.primary.main,
+    },
+    "&.MuiOutlinedInput-root": {
+      "& .MuiOutlinedInput-notchedOutline": {
+        borderColor: `${theme.palette.grey[300]} !important`,
+        borderWidth: `1px !important`,
+      },
+    },
+  },
+  searchButton: {
+    marginLeft: 3,
   },
 }));
 
@@ -122,53 +189,6 @@ export const TableHeaderSortSpan = (props) => {
         {count % 2 === 1 ? <ArrowDropDown /> : <ArrowDropUp />}
       </Grid>
     </Grid>
-  );
-};
-
-export const OrderSelectMenu = (props) => {
-  const classes = useStyles();
-  const { onChange, filter_list_type, order_data, order_column } = props;
-
-  const [state, setState] = useState("");
-
-  const handleChange = (event) => {
-    setState(event.target.value);
-
-    if (onChange) {
-      onChange({
-        order_column: order_data[filter_list_type].find(
-          (order) => order.value === event.target.value
-        ).value,
-      });
-    }
-  };
-  const mounted = useRef(false);
-  useEffect(() => {
-    if (!mounted.current) {
-      mounted.current = true;
-      console.log({ order_column });
-      setState(order_column);
-    } else {
-      console.log(order_data[filter_list_type][0]);
-      setState(order_data[filter_list_type][0].value);
-    }
-  }, [filter_list_type]);
-
-  return (
-    <Select
-      // className={classes[className]}
-      variant="outlined"
-      value={state}
-      onChange={handleChange}
-    >
-      {order_data[filter_list_type]?.map((order, index) => {
-        return (
-          <MenuItem key={order.key} value={order.value}>
-            {order.key}
-          </MenuItem>
-        );
-      })}
-    </Select>
   );
 };
 
@@ -229,8 +249,7 @@ export const SearchFilter = (props) => {
           </Select>
         </FormControl>
       </Grid>
-      <Grid item className="divider"></Grid>
-      <Grid item className="date">
+      <Grid item>
         <FormControl
           // className={clsx(classes.margin, classes.textField)}
           variant="outlined"
@@ -249,15 +268,19 @@ export const SearchFilter = (props) => {
             onChange={onChangeSearchText}
             startAdornment={
               <InputAdornment position="start">
-                <Search fontSize={"small"} />
+                <Search fontSize={"medium"} />
               </InputAdornment>
             }
             labelWidth={0}
           />
         </FormControl>
       </Grid>
-      <Grid item className="date">
-        <Button variant="contained" onClick={onClickSearchButton}>
+      <Grid item>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={onClickSearchButton}
+        >
           검색
         </Button>
       </Grid>
@@ -338,7 +361,7 @@ export const TypeSelectMenu = (props) => {
 
 export const SelectComponent = (props) => {
   const classes = useStyles();
-  const { items, current, onChange, variant, className } = props;
+  const { items, current, onChange, variant, className, label } = props;
 
   const onSelectMenuItem = (event) => {
     if (onChange) {
@@ -347,20 +370,29 @@ export const SelectComponent = (props) => {
   };
 
   return (
-    <Select
-      className={classes[className]}
-      variant={variant}
-      value={current}
-      onChange={onSelectMenuItem}
-    >
-      {items.map((item, index) => {
-        return (
-          <MenuItem key={item.key} value={item.key}>
-            {item.label}
-          </MenuItem>
-        );
-      })}
-    </Select>
+    <Grid container className={label && classes.headerContainer}>
+      {label && (
+        <Grid item className={classes.headerItemLabel}>
+          <Typography variant="body1">{label}</Typography>
+        </Grid>
+      )}
+      <Grid item>
+        <Select
+          className={classes[className]}
+          variant={variant}
+          value={current}
+          onChange={onSelectMenuItem}
+        >
+          {items.map((item, index) => {
+            return (
+              <MenuItem key={item.key} value={item.key}>
+                {item.label}
+              </MenuItem>
+            );
+          })}
+        </Select>
+      </Grid>
+    </Grid>
   );
 };
 
@@ -375,7 +407,7 @@ export const ButtonGroupComponent = (props) => {
   };
 
   return (
-    <ButtonGroup aria-label="contained primary button group">
+    <ButtonGroup size="large" className={classes.buttonOutlinedCustom}>
       {items.map((x, i) => {
         return (
           <Button
@@ -388,5 +420,113 @@ export const ButtonGroupComponent = (props) => {
         );
       })}
     </ButtonGroup>
+  );
+};
+
+export const SearchComponent = (props) => {
+  const classes = useStyles();
+  const reducer = useSelector((state) => state.reducer);
+  const {
+    items,
+    current,
+    reducer_key,
+    onChange,
+    onSubmit,
+    variant,
+    className,
+  } = props;
+  // console.log(props);
+  const [state, setState] = useState({
+    search_filter: "",
+    search_text: "",
+  });
+
+  const onSelectMenuItem = (e) => {
+    setState({ ...state, search_filter: e.target.value, search_text: "" });
+    // if (onChange) {
+    //   onChange(items.find((item) => item.key === event.target.value));
+    // }
+  };
+
+  const onInputChange = (e) => {
+    setState({ ...state, search_text: e.target.value });
+  };
+
+  const handleSubmit = () => {
+    if (onSubmit) {
+      onSubmit({
+        search_filter: state.search_filter,
+        search_text: state.search_text.trim(),
+      });
+      // onSubmit(ref.current.value.trim());
+    }
+  };
+
+  useEffect(() => {
+    // console.log(current);
+    // console.log(items);
+    setState({
+      ...state,
+      search_filter: current.search_filter,
+      search_text: current.search_text,
+    });
+  }, [
+    reducer[reducer_key].list_params.search_filter,
+    reducer[reducer_key].list_params.current_page,
+  ]);
+
+  return (
+    <Grid container justify="center" alignItems="center">
+      <Grid item>
+        <Select
+          className={classes.searchFilter}
+          variant="outlined"
+          value={state.search_filter}
+          onChange={onSelectMenuItem}
+        >
+          {items.map((item, index) => {
+            return (
+              <MenuItem key={item.key} value={item.key}>
+                {item.label}
+              </MenuItem>
+            );
+          })}
+        </Select>
+      </Grid>
+      {/* <Grid item className="divider"></Grid> */}
+      <Grid item>
+        <FormControl variant="outlined">
+          <OutlinedInput
+            inputProps={{
+              style: {
+                height: 7,
+                width: 128,
+                paddingTop: 16,
+                paddingBottom: 21,
+                lineHeight: 1,
+              },
+            }}
+            type={"text"}
+            value={state.search_text}
+            onChange={onInputChange}
+            startAdornment={
+              <InputAdornment position="start" onClick={handleSubmit}>
+                <Search fontSize={"medium"} />
+              </InputAdornment>
+            }
+            labelWidth={0}
+            className={classes.searchText}
+            onKeyUp={(e) => {
+              e.key === "Enter" && handleSubmit();
+            }}
+          />
+        </FormControl>
+      </Grid>
+      {/* <Grid item className={classes.searchButton}>
+        <Button variant="contained" color="primary" onClick={handleSubmit}>
+          검색
+        </Button>
+      </Grid> */}
+    </Grid>
   );
 };

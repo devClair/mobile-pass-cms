@@ -61,7 +61,7 @@ const HeaderComponent = (props) => {
 
   return (
     <SelectComponent
-      className="outlinedCustom"
+      className="selectOutlined"
       variant="outlined"
       items={filter_list_type.map((x) => reducer.filter_list_type[x])}
       current={user.list_params.filter_list_type}
@@ -160,7 +160,7 @@ const List = (props) => {
     },
     {
       filter_list_type: "business_user",
-      order_column: ["trade_name", "history", "join_dt"],
+      order_column: ["business_name", "history", "join_dt"],
       filter_column: {
         key: "filter_is_approved",
         value: ["all", "awating", "approved"],
@@ -242,7 +242,7 @@ const List = (props) => {
     {
       component: (
         <SelectComponent
-          className="outlinedCustom"
+          className="selectOutlined"
           variant="outlined"
           items={state.orderColumn.map((x) => reducer.order_column[x])}
           current={user.list_params.order_column}
@@ -253,7 +253,7 @@ const List = (props) => {
     {
       component: (
         <SelectComponent
-          className="outlinedCustom"
+          className="selectOutlined"
           variant="outlined"
           items={reducer.filter_country_code}
           current={user.list_params.filter_country_code}

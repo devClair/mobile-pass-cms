@@ -175,12 +175,12 @@ const order_column = {
     key: "user_name",
     label: "이름",
   },
-  email: {
-    key: "email",
-    label: "이메일",
+  birth: {
+    key: "birth",
+    label: "생년월일",
   },
-  trade_name: {
-    key: "trade_name",
+  business_name: {
+    key: "business_name",
     label: "법인/상호명",
   },
   history: {
@@ -212,7 +212,6 @@ const filter_is_approved = {
     key: "all",
     label: "전체",
   },
-
   awating: {
     key: "awating",
     label: "대기중",
@@ -220,6 +219,29 @@ const filter_is_approved = {
   approved: {
     key: "approved",
     label: "승인완료",
+  },
+};
+
+const search_filter = {
+  user_name: {
+    key: "user_name",
+    label: "이름",
+  },
+  email: {
+    key: "email",
+    label: "이메일",
+  },
+  remarks: {
+    key: "remarks",
+    label: "비고",
+  },
+  business_name: {
+    key: "business_name",
+    label: "법인/상호명",
+  },
+  business_license_number: {
+    key: "business_license_number",
+    label: "사업자등록번호",
   },
 };
 
@@ -329,6 +351,8 @@ const list_params_default = {
     filter_country_code: "ALL",
     filter_gender: "all",
     filter_is_approved: "all",
+    search_filter: "user_name",
+    search_text: "",
     current_page: 1,
   },
   report: {
@@ -580,6 +604,7 @@ const INITIAL_STATE = {
   filter_country_code: IsoCode,
   filter_gender: filter_gender,
   filter_is_approved: filter_is_approved,
+  search_filter: search_filter,
   sort_span_dic: sort_span_dic,
   modalOverflow: true,
   inquiry_type_data: inquiry_type_data,

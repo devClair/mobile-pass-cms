@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 
 import { Grid, Checkbox } from "@material-ui/core";
-import Wrapper from "./styles";
 import { useHistory } from "react-router-dom";
 
 import { AuthComponent } from "../../components/auth";

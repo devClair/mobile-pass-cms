@@ -60,6 +60,13 @@ const theme = createMuiTheme({
         color: "white",
       },
     },
+    MuiButton: {
+      contained: {
+        color: "rgba(265, 265, 265, 0.87)",
+      },
+    },
+    // .MuiButton-contained : {color : rgba(265, 265, 265, 0.87);}
+
     // MuiOutlinedInput: {
     //   root: {
     //     "&:hover": {
@@ -142,23 +149,28 @@ const Layout = (props) => {
   const classes = useStyles();
   // const dispatch = useDispatch();
   // dispatch({ type: "SET_PAGE_KEY", payload: "" });
+  // console.log(locationPathname);
 
   return (
     <ThemeProvider theme={theme}>
-      <div className={classes.root}>
-        <CssBaseline />
-        <Header drawerWidth={drawerWidth} headerComponent={headerComponent} />
-        <Sidebar
-          drawerWidth={drawerWidth}
-          locationPathname={locationPathname}
-        />
-        <main className={classes.content}>
-          {/* <div className={classes.toolbar} /> */}
-          <Toolbar />
+      {locationPathname.indexOf("accounts") !== -1 ? (
+        <div>{children}</div>
+      ) : (
+        <div className={classes.root}>
+          <CssBaseline />
+          <Header drawerWidth={drawerWidth} headerComponent={headerComponent} />
+          <Sidebar
+            drawerWidth={drawerWidth}
+            locationPathname={locationPathname}
+          />
+          <main className={classes.content}>
+            {/* <div className={classes.toolbar} /> */}
+            <Toolbar />
 
-          <Paper>{children}</Paper>
-        </main>
-      </div>
+            <Paper>{children}</Paper>
+          </main>
+        </div>
+      )}
     </ThemeProvider>
   );
 };

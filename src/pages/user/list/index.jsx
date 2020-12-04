@@ -88,7 +88,6 @@ const List = (props) => {
   useEffect(() => {
     console.log("render");
   }, []);
-  // console.log("List");
 
   let locationPathname = location.pathname;
   const classes = useStyles();
@@ -153,33 +152,6 @@ const List = (props) => {
         />
       ),
     },
-    // {
-    //   title: "강사 권한 부여",
-    //   field: "user_status",
-    //   type: "boolean",
-    //   // render: (rowData) => (rowData.lecture_state == 1 ? true : false),
-    //   render: (rowData) => (
-    //     <Checkbox
-    //       checked={rowData.tb_user.user_status == 1 ? true : false}
-    //       className={classes.checkbox}
-    //       disabled
-    //     />
-    //   ),
-    // },
-
-    // {
-    //   title: "메인 노출",
-    //   field: "best_user_state",
-    //   type: "boolean",
-    //   // render: (rowData) => (rowData.lecture_state == 1 ? true : false),
-    //   render: (rowData) => (
-    //     <Checkbox
-    //       checked={rowData.best_user_state == 1 ? true : false}
-    //       className={classes.checkbox}
-    //       disabled
-    //     />
-    //   ),
-    // },
   ];
   const [state, setState] = useState({
     orderColumn: [],
@@ -362,7 +334,7 @@ const List = (props) => {
   ];
 
   const onRowClick = (rowData) => {
-    history.push(`${match.url}/detail/${rowData.user_no}`);
+    // history.push(`${match.url}/detail/${rowData.user_no}`);
   };
 
   const goToCreate = () => {
@@ -389,7 +361,7 @@ const List = (props) => {
 
   const mounted = useRef(false);
   useEffect(() => {
-    console.log("[user.list_params.filter_list_type]");
+    // console.log("[user.list_params.filter_list_type]");
 
     let changedByFilterListType = listParams.find(
       (x) => x.filter_list_type === user.list_params.filter_list_type
@@ -442,36 +414,28 @@ const List = (props) => {
           }
           locationPathname={locationPathname}
         >
-          <Grid className="customer">
-            <Grid className="table_wrap">
-              <TableHeader columns={tableHeaderColumns} searchComponent />
-              <Grid className="table">
-                <Table
-                  data={user.user_data.data}
-                  columns={tableColumns}
-                  onRowClick={onRowClick}
-                  options={{
-                    pageSize: 10,
-                    paging: true,
-                  }}
-                />
-              </Grid>
-              <TableFooter
-                data={user.user_data.data}
-                count={user.user_data.total_page}
-                page={
-                  user.list_params.current_page
-                    ? user.list_params.current_page
-                    : 1
-                }
-                excel={true}
-                onChangeCallback={onPageNoClick}
-                createButton={false}
-                goToCreate={goToCreate}
-                onExcelDownload={onClickExcelButton}
-              ></TableFooter>
-            </Grid>
-          </Grid>
+          <TableHeader columns={tableHeaderColumns} searchComponent />
+          <Table
+            data={user.user_data.data}
+            columns={tableColumns}
+            onRowClick={onRowClick}
+            options={{
+              pageSize: 10,
+              paging: true,
+            }}
+          />
+          <TableFooter
+            data={user.user_data.data}
+            count={user.user_data.total_page}
+            page={
+              user.list_params.current_page ? user.list_params.current_page : 1
+            }
+            excel={true}
+            onChangeCallback={onPageNoClick}
+            createButton={false}
+            goToCreate={goToCreate}
+            onExcelDownload={onClickExcelButton}
+          ></TableFooter>
         </Layout>
       </FormProvider>
       <DevTool control={methods.control} />

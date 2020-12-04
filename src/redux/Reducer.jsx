@@ -591,7 +591,7 @@ const INITIAL_STATE = {
   isLoading: 0, // 로딩 상태
   currentAuthUiState: CurrentAuthUiState.SIGN_IN, // 인증 화면 상태
   // currentAuthUiState: CurrentAuthUiState.CHANGE_PASSWORD, // 인증 화면 상태
-  userState: UserState.SIGNED, // 인증 상태
+  userState: UserState.NOT_SIGN, // 인증 상태
   myAuth: {}, // 인증관련 정보
   myUser: {}, // 로그인후 유저 정보
   userData: {

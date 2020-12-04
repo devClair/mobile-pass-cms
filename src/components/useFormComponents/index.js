@@ -1,12 +1,18 @@
-import React, {
-  useContext,
-  useState,
-  useRef,
-  useEffect,
-  useMemo,
-  useCallback,
-} from "react";
+import React, { useState, useEffect } from "react";
 
+// redux
+import { useDispatch, useSelector } from "react-redux";
+import produce from "immer";
+
+// @material-ui/core/styles
+import {
+  makeStyles,
+  styled,
+  createMuiTheme,
+  ThemeProvider,
+} from "@material-ui/core/styles";
+
+// @material-ui/core
 import {
   Container,
   Grid,
@@ -22,18 +28,28 @@ import {
   Slider,
   FormControlLabel,
   Chip,
+  InputAdornment,
 } from "@material-ui/core";
 
-import clsx from "clsx";
+// @material-ui/icons
+import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 
+// @material-ui/pickers
 import {
   DatePicker,
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
+
+// react-hook-form
+import { Controller, useFormContext, useFieldArray } from "react-hook-form";
+
+// clsx
+import clsx from "clsx";
+
+// @date-io/date-fns
 import DateFnsUtils from "@date-io/date-fns";
 
-//-------------------------------------------
 // date-fns
 import {
   subMonths,
@@ -44,21 +60,7 @@ import {
   endOfMonth,
 } from "date-fns";
 
-import {
-  makeStyles,
-  styled,
-  createMuiTheme,
-  ThemeProvider,
-} from "@material-ui/core/styles";
-
-import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
-
-// components
-import Dropzone from "../../components/dropzone";
-import SearchDialog from "../../components/search-dialog";
-import ChipsArray from "../../components/chips-array";
-
-// wysiwyg
+// draft-js
 import {
   EditorState,
   convertToRaw,
@@ -66,16 +68,27 @@ import {
   convertFromRaw,
   convertFromHTML,
 } from "draft-js";
+
+// react-draft-wysiwyg
 import { Editor } from "react-draft-wysiwyg";
+
+// draftjs-to-html
 import draftToHtml from "draftjs-to-html";
+
+// html-to-draftjs
 import htmlToDraft from "html-to-draftjs";
+
+// react-draft-wysiwyg.css
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
-import { Controller, useFormContext, useFieldArray } from "react-hook-form";
+// components/dropzone
+import Dropzone from "../../components/dropzone";
 
-// redux
-import { useDispatch, useSelector } from "react-redux";
-import produce from "immer";
+// components/search-dialog
+import SearchDialog from "../../components/search-dialog";
+
+// components/chips-array
+import ChipsArray from "../../components/chips-array";
 
 const useStyles = makeStyles((theme) => ({
   upload_button: {
@@ -186,6 +199,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const useTextFieldStyles = makeStyles((theme) => ({
+  accountInput: {
+    color: theme.palette.primary.main,
+    height: 78,
+    marginTop: 8,
+  },
+  // input:-internal-autofill-selected
+  autofillCustom: {
+    // "&:-internal-autofill-selected": {
+    //   backgroundColor: "red !important",
+    //   // WebkitBoxShadow: "0 0 0 1000px white inset"
+    // },
+    "&:-webkit-autofill": {
+      // WebkitBoxShadow: "0 0 0 1000px white inset",
+      boxShadow: "0 0 0 1000px white inset",
+    },
+  },
+}));
+
 export const SelectComponent = (props) => {
   const classes = useStyles();
 
@@ -221,91 +253,67 @@ export const SelectComponent = (props) => {
   );
 };
 
-// export const SelectComponent = (props) => {
-//   const classes = useStyles();
-//   const { isEditable, currentValue, onChange, menuItems, ref } = props;
-//   return (
-//     <>
-//       {isEditable ? (
-//         <Select
-//           className={classes.selectOutlined}
-//           variant="outlined"
-//           value={currentValue}
-//           onChange={onChange}
-//         >
-//           {menuItems.map((x) => {
-//             return (
-//               <MenuItem key={x.key} value={x.value}>
-//                 {x.key}
-//               </MenuItem>
-//             );
-//           })}
-//         </Select>
-//       ) : (
-//         // <TextField
-//         //   id="outlined-multiline-static"
-//         //   defaultValue={lecture?.tb_lecture_department?.code_id}
-//         //   variant="outlined"
-//         //   // fullWidth
-//         //   // inputProps={{
-//         //   //   readOnly: !isEditable,
-//         //   // }}
-//         //   className={classes.text_field}
-//         //   ref={lecture_departmentRef}
-//         // />
-//         <Typography variant="subtitle1">
-//           {/* {lecture?.tb_lecture_department?.code_id} */}
-//           {menuItems?.find((x) => x.value == currentValue)?.key}
-//         </Typography>
-//       )}
-//     </>
-//   );
-// };
-
-export const TextFieldComponent = (props) => {
-  const classes = useStyles();
+export const TextFieldController = (props) => {
+  const textFieldClasses = useTextFieldStyles();
   const {
-    isEditable,
-    value,
-    onChange,
-    multiline,
-    rows,
-    number,
-    placeholder,
-    step,
-    min,
-    max,
-    fullWidth,
     name,
-    helperText,
-    required,
+    className,
+    placeholder,
+    pattern,
+    label,
+    icon,
+    // errorMessage,
+    type,
+    errors,
   } = props;
-  const { control, watch, register } = useFormContext();
+  const { control, watch, register, setValue } = useFormContext();
+  // console.log({ errors });
+  const errorMessage = {
+    required: `*${placeholder} 항목은 필수입니다.`,
+  };
 
   return (
     <Controller
       as={
         <TextField
-          className={classes.selectOutlined}
+          className={textFieldClasses[className]}
           variant="outlined"
-          // inputRef={register({
-          //   required: true,
-          // })}
-          placeholder={placeholder}
-          inputProps={{
-            // readOnly: !isEditable,
-            step: step,
-            min: min,
-            max: max,
-            type: number ? "number" : "text",
-          }}
-          // value={value}
-          // onChange={onChange}
-          multiline={multiline}
-          rows={rows}
-          // fullWidth={fullWidth ? true : false}
           fullWidth
-          disabled={!isEditable}
+          // size="small"
+          placeholder={placeholder}
+          label={label}
+          helperText={
+            errors[name] &&
+            (errorMessage[errors[name].type]
+              ? errorMessage[errors[name].type]
+              : errors[name].message)
+            // errors[name] && errors[name].message
+          }
+          inputProps={{
+            className: textFieldClasses.autofillCustom,
+            onBlur: (e) => {
+              // console.log(e.target.value);
+              setValue(name, e.target.value.replace(/(\s*)/g, ""));
+            },
+            // readOnly: !isEditable,
+            // step: step,
+            // min: min,
+            // max: max,
+            type: type ? type : "text",
+          }}
+          InputProps={{
+            startAdornment: icon && (
+              <InputAdornment position="start">{icon}</InputAdornment>
+            ),
+          }}
+          error={errors[name]}
+          // onBlur={(e) => {
+          //   console.log(e);
+          // }}
+
+          // multiline={multiline}
+          // rows={rows}
+          // fullWidth={fullWidth ? true : false}
         />
       }
       control={control}
@@ -313,49 +321,12 @@ export const TextFieldComponent = (props) => {
       name={name}
       rules={{
         required: true,
+        // pattern: /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/,
+        pattern: pattern,
       }}
     ></Controller>
   );
 };
-// export const TextFieldComponentBak = (props) => {
-//   const classes = useStyles();
-//   const {
-//     isEditable,
-//     value,
-//     onChange,
-//     multiline,
-//     rows,
-//     number,
-//     placeholder,
-//     step,
-//     min,
-//     max,
-//     fullWidth,
-//     helperText,
-//   } = props;
-//   return (
-//     <>
-//       <TextField
-//         className={classes.selectOutlined}
-//         variant="outlined"
-//         placeholder={placeholder}
-//         value={value}
-//         inputProps={{
-//           readOnly: !isEditable,
-//           step: step,
-//           min: min,
-//           max: max,
-//           type: number ? "number" : "text",
-//         }}
-//         onChange={onChange}
-//         multiline={multiline}
-//         rows={rows}
-//         // fullWidth
-//         fullWidth={fullWidth ? true : false}
-//       />
-//     </>
-//   );
-// };
 
 export const TimeInputComponent = (props) => {
   const { isEditable, value, onChange, min, max } = props;

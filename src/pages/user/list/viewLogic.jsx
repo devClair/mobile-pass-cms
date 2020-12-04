@@ -65,10 +65,10 @@ export const useViewLogic = () => {
       console.log("LIST_CMS_LECTURES -> success");
     } catch (error) {
       // alert(error);
-      console.log("Error", error);
-      console.log("Error", error.code);
-      console.log("Error", error.message);
-      console.log("Error", error.response.data);
+      // console.log("Error", error);
+      // console.log("Error", error.code);
+      // console.log("Error", error.message);
+      // console.log("Error", error.response.data);
     }
   };
 
@@ -119,10 +119,10 @@ export const useViewLogic = () => {
       console.log("LIST_CMS_LECTURES -> success");
     } catch (error) {
       // alert(error);
-      console.log("Error", error);
-      console.log("Error", error.code);
-      console.log("Error", error.message);
-      console.log("Error", error.response.data);
+      // console.log("Error", error);
+      // console.log("Error", error.code);
+      // console.log("Error", error.message);
+      // console.log("Error", error.response.data);
     }
   };
 

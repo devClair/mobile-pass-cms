@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 //-------------------------------------------
 // page
 import Login from "./pages/login/";
+import Accounts from "./pages/accounts/";
 // import Dashboard from "./pages/dashboard";
 // import Customer from "./pages/member-info/customer/";
 // import CustomerDetail from "./pages/member-info/customer/detail/";
@@ -35,6 +36,9 @@ import {
   UserState,
 } from "@psyrenpark/auth";
 
+// query-string
+import queryString from "query-string";
+
 import { apiObject } from "./api";
 
 import { useLoadingFunction } from "./Hooks";
@@ -57,6 +61,8 @@ const Routes = () => {
   const userState = useSelector((state) => state.reducer.userState);
   const dispatch = useDispatch();
   const loadingFunction = useLoadingFunction();
+
+  const querData = queryString.parse(window.location.search);
 
   const checkAuth = async () => {
     try {
@@ -90,7 +96,7 @@ const Routes = () => {
         payload: userData.data.item,
       });
     } catch (error) {
-      console.log("checkToLogin -> error", error);
+      // console.log("checkToLogin -> error", error);
 
       await Auth.signOut();
 
@@ -104,17 +110,23 @@ const Routes = () => {
   useEffect(() => {
     // 정규식 필요
     checkAuth();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userState]);
-
+  // console.log(userState);
+  // console.log(querData);
+  // console.log(window.location.search);
   return (
     <div>
       {userState !== UserState.SIGNED ? (
         <BrowserRouter>
           <Switch>
-            <Route path="/" exact component={Login} />
             <Route path="/login" component={Login} />
-            <Redirect to="/" />
+            <Route path="/accounts" component={Accounts} />
+            <Redirect
+              to={`/accounts/?entryFlow=${
+                querData.entryFlow ? querData.entryFlow : "signin"
+              }
+              `}
+            />
           </Switch>
         </BrowserRouter>
       ) : (
@@ -123,7 +135,6 @@ const Routes = () => {
             <Route exact path="/" component={User} />
             <Route path="/user" component={User} />
             <Route path="/report" component={Report} />
-
             <Route path="/lecture" component={Lecture} />
             <Route path="/faq" component={Faq} />
             <Route path="/inquiry" component={Inquiry} />
@@ -132,8 +143,7 @@ const Routes = () => {
             <Route path="/content" component={Content} />
             <Route path="/lecturer" component={Lecturer} />
             <Route path="/payment" component={Payment} />
-
-            <Redirect to="/" />
+            <Redirect to={`/${window.location.search}`} />
           </Switch>
         </BrowserRouter>
       )}

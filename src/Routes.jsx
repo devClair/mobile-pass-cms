@@ -67,11 +67,11 @@ const Routes = () => {
   const checkAuth = async () => {
     try {
       var auth = await Auth.currentSession();
-      console.log("checkAuth -> auth", auth);
+      // console.log("checkAuth -> auth", auth);
 
       var isAdmin = await Auth.isIncludeGroup("admin");
 
-      console.log("checkAuth -> isAdmin", isAdmin);
+      // console.log("checkAuth -> isAdmin", isAdmin);
 
       if (isAdmin) {
         dispatch({
@@ -87,7 +87,7 @@ const Routes = () => {
       }
 
       var userData = await apiObject.getUser({}, loadingFunction);
-      console.log("checkAuth -> userData", userData);
+      // console.log("checkAuth -> userData", userData);
 
       // console.log('checkAuth -> userData', userData);
 

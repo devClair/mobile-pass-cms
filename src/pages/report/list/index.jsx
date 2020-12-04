@@ -10,9 +10,9 @@ import {
   MenuItem,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Wrapper from "./styles";
 
-import { Route, useHistory, Link } from "react-router-dom";
+// react-router-dom
+import { Route, useHistory } from "react-router-dom";
 
 // layout
 import Layout from "../../../layout";
@@ -24,7 +24,7 @@ import Table from "../../../components/table";
 import TableFooter from "../../../components/table-footerV2";
 import {
   TableHeaderSortSpan,
-  SearchFilter,
+  SearchComponent,
   DatePicker,
   SelectComponent,
   ButtonGroupComponent,
@@ -46,16 +46,12 @@ import { DevTool } from "@hookform/devtools";
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 const useStyles = makeStyles((theme) => ({
-  checkbox: {
-    // height: "unset!important",
-    // marginTop: "5px",
-    color: "rgba(0, 0, 0, 0.54)!important",
-  },
+  test: { color: "red" },
 }));
 
 const HeaderComponent = (props) => {
   const reducer = useSelector((state) => state.reducer);
-  const user = reducer.user;
+  const report = reducer.report;
   const dispatch = useDispatch();
   const { filter_list_type } = props;
 
@@ -64,12 +60,12 @@ const HeaderComponent = (props) => {
       className="selectOutlined"
       variant="outlined"
       items={filter_list_type.map((x) => reducer.filter_list_type[x])}
-      current={user.list_params.filter_list_type}
+      current={report.list_params.filter_list_type}
       onChange={(item) => {
         dispatch({
           type: "SET_HADER_LIST_PARAMS",
           payload: {
-            reducer_type: "user",
+            reducer_type: "report",
             list_params: {
               filter_list_type: item.key,
               current_page: 1,
@@ -83,21 +79,53 @@ const HeaderComponent = (props) => {
 
 const List = (props) => {
   const { match, location } = props;
+
   let locationPathname = location.pathname;
   const classes = useStyles();
 
   const reducer = useSelector((state) => state.reducer);
-  const user = reducer.user;
+  const report = reducer.report;
   const dispatch = useDispatch();
   const history = useHistory();
   const { save } = useViewLogic();
 
   const methods = useForm({
     defaultValues: {
-      user_type: "client_user",
+      // user_type: "client_user",
     },
   });
-  const { watch, setValue, handleSubmit, reset } = methods;
+  // const { watch, setValue, handleSubmit, reset } = methods;
+
+  const [state, setState] = useState({
+    orderColumn: [],
+    filter_column: { key: "", value: [] },
+    filter_column_2nd: { key: "", value: [] },
+    search_filter: [],
+    search_text: "",
+  });
+
+  const listParams = [
+    {
+      filter_list_type: "standard_q",
+      order_column: ["user_name", "birth"],
+      filter_column: { key: "filter_gender", value: ["all", "male", "female"] },
+      filter_column_2nd: {
+        key: "filter_test_result",
+        value: ["all", "positive", "negative", "invalid"],
+      },
+      search_filter: ["user_name", "email", "remarks"],
+    },
+    {
+      filter_list_type: "standard_f",
+      order_column: ["user_name", "birth"],
+      filter_column: { key: "filter_gender", value: ["all", "male", "female"] },
+      filter_column_2nd: {
+        key: "filter_test_result",
+        value: ["all", "positive", "negative", "invalid"],
+      },
+      search_filter: ["user_name", "email", "remarks"],
+    },
+  ];
 
   const tableColumns = [
     {
@@ -141,30 +169,10 @@ const List = (props) => {
       render: (rowData) => (
         <Checkbox
           checked={rowData.lecturer_status === 1 ? true : false}
-          className={classes.checkbox}
-          disabled
+          // className={classes.checkbox}
+          // disabled
         />
       ),
-    },
-  ];
-  const [state, setState] = useState({
-    orderColumn: [],
-    filter_column: { key: "", value: [] },
-  });
-
-  const listParams = [
-    {
-      filter_list_type: "client_user",
-      order_column: ["user_name", "email"],
-      filter_column: { key: "filter_gender", value: ["all", "male", "female"] },
-    },
-    {
-      filter_list_type: "business_user",
-      order_column: ["business_name", "history", "join_dt"],
-      filter_column: {
-        key: "filter_is_approved",
-        value: ["all", "awating", "approved"],
-      },
     },
   ];
 
@@ -172,7 +180,7 @@ const List = (props) => {
     dispatch({
       type: "SET_HADER_LIST_PARAMS",
       payload: {
-        reducer_type: "user",
+        reducer_type: "report",
         list_params: {
           order_column: item.key,
           // order_type,
@@ -186,7 +194,7 @@ const List = (props) => {
     dispatch({
       type: "SET_HADER_LIST_PARAMS",
       payload: {
-        reducer_type: "user",
+        reducer_type: "report",
         list_params: {
           filter_country_code: item.key,
           // order_type,
@@ -197,12 +205,12 @@ const List = (props) => {
   };
 
   const onChangeFilterColumn = (item) => {
-    console.log({ item });
-    console.log({ state });
+    // console.log({ item });
+    // console.log({ state });
     dispatch({
       type: "SET_HADER_LIST_PARAMS",
       payload: {
-        reducer_type: "user",
+        reducer_type: "report",
         list_params: {
           [state.filter_column.key]: item.key,
           current_page: 1,
@@ -210,28 +218,31 @@ const List = (props) => {
       },
     });
   };
-
-  const onChangeDateColumn = ({ filter_begin_dt, filter_end_dt }) => {
+  const onChangeFilterColumn2nd = (item) => {
+    // console.log({ item });
+    // console.log({ state });
     dispatch({
       type: "SET_HADER_LIST_PARAMS",
       payload: {
-        reducer_type: "user",
+        reducer_type: "report",
         list_params: {
-          filter_begin_dt,
-          filter_end_dt,
+          [state.filter_column_2nd.key]: item.key,
           current_page: 1,
         },
       },
     });
   };
 
-  const onChangeSearchColumn = ({ searchText, menuItem }) => {
+  const onSubmitSearchText = (params) => {
+    // console.log({ value });
     dispatch({
       type: "SET_HADER_LIST_PARAMS",
       payload: {
-        reducer_type: "user",
+        reducer_type: "report",
         list_params: {
-          [menuItem]: searchText,
+          search_filter: params.search_filter,
+          search_text: params.search_text,
+          // order_type,
           current_page: 1,
         },
       },
@@ -242,76 +253,70 @@ const List = (props) => {
     {
       component: (
         <SelectComponent
-          className="selectOutlined"
+          className="outlinedCustomHeader"
           variant="outlined"
           items={state.orderColumn.map((x) => reducer.order_column[x])}
-          current={user.list_params.order_column}
+          current={report.list_params.order_column}
           onChange={onChangeOrderColumn}
+          label="정렬"
         />
       ),
+      position: "left",
     },
-    {
-      component: (
-        <SelectComponent
-          className="selectOutlined"
-          variant="outlined"
-          items={reducer.filter_country_code}
-          current={user.list_params.filter_country_code}
-          onChange={onChangeFilterCountryCode}
-        />
-      ),
-    },
+
     {
       component: (
         <ButtonGroupComponent
           items={state.filter_column.value.map(
             (x) => reducer[state.filter_column.key][x]
           )}
-          current={user.list_params[state.filter_column.key]}
+          current={report.list_params[state.filter_column.key]}
           onClick={onChangeFilterColumn}
         />
       ),
+      position: "left",
     },
-    // {
-    //   component: (
-    //     <TableHeaderSortSpan
-    //       order_key="createdAt"
-    //       order_data={reducer.sort_span_dic["createdAt"]}
-    //       order_column={user?.list_params?.order_column}
-    //       onChange={onChangeOrderColumn}
-    //     />
-    //   ),
-    // },
-    // {
-    //   component: (
-    //     <TableHeaderSortSpan
-    //       order_key="lecturer_status"
-    //       order_data={reducer.sort_span_dic["lecturer_status"]}
-    //       order_column={user?.list_params?.order_column}
-    //       onChange={onChangeOrderColumn}
-    //     />
-    //   ),
-    // },
+    {
+      component: (
+        <ButtonGroupComponent
+          items={state.filter_column_2nd.value.map(
+            (x) => reducer[state.filter_column_2nd.key][x]
+          )}
+          current={report.list_params[state.filter_column_2nd.key]}
+          onClick={onChangeFilterColumn2nd}
+        />
+      ),
+      position: "left",
+    },
+    {
+      component: (
+        <SearchComponent
+          // search_type_data={report.search_type_data}
+          items={state.search_filter.map((x) => reducer.search_filter[x])}
+          reducer_key="report"
+          current={{
+            search_filter: report.list_params.search_filter,
+            search_text: report.list_params.search_text,
+          }}
+          // onChange={onChangeSearchFilter}
+          onSubmit={onSubmitSearchText}
+        />
+      ),
+      position: "right",
+    },
+
     // {
     //   component: (
     //     <DatePicker
-    //       filter_dt={user.list_params.filter_end_dt}
+    //       filter_dt={report.list_params.filter_end_dt}
     //       onChange={onChangeDateColumn}
-    //     />
-    //   ),
-    // },
-    // {
-    //   component: (
-    //     <SearchFilter
-    //       search_type_data={user.search_type_data}
-    //       onChange={onChangeSearchColumn}
     //     />
     //   ),
     // },
   ];
 
   const onRowClick = (rowData) => {
-    history.push(`${match.url}/detail/${rowData.user_no}`);
+    // history.push(`${match.url}/detail/${rowData.user_no}`);
   };
 
   const goToCreate = () => {
@@ -324,7 +329,7 @@ const List = (props) => {
     dispatch({
       type: "SET_HADER_LIST_PARAMS",
       payload: {
-        reducer_type: "user",
+        reducer_type: "report",
         list_params: {
           current_page: n,
         },
@@ -337,38 +342,57 @@ const List = (props) => {
   };
 
   const mounted = useRef(false);
+
   useEffect(() => {
     let changedByFilterListType = listParams.find(
-      (x) => x.filter_list_type === user.list_params.filter_list_type
+      (x) => x.filter_list_type === report.list_params.filter_list_type
     );
+
     setState({
       ...state,
       orderColumn: changedByFilterListType.order_column,
       filter_column: changedByFilterListType.filter_column,
+      filter_column_2nd: changedByFilterListType.filter_column_2nd,
+      search_filter: changedByFilterListType.search_filter,
+      search_text: changedByFilterListType.search_text,
     });
+
     if (!mounted.current) {
       mounted.current = true;
     } else {
-      const [filter_gender, filter_is_approved] = listParams.map((x) => {
+      const [filter_gender, ...rest_filter_column] = listParams.map((x) => {
         return {
           [x.filter_column.key]: x.filter_column.value[0],
         };
       });
+      const [filter_test_result, ...rest_filter_column_2nd] = listParams.map(
+        (x) => {
+          console.log(x.filter_column_2nd.key);
+          console.log(x.filter_column_2nd.value[0]);
+          return {
+            [x.filter_column_2nd.key]: x.filter_column_2nd.value[0],
+          };
+        }
+      );
+      // console.log(filter_gender, filter_test_result);
+      // console.log(rest_filter_column, rest_filter_column_2nd);
 
       dispatch({
         type: "SET_HADER_LIST_PARAMS",
         payload: {
-          reducer_type: "user",
+          reducer_type: "report",
           list_params: {
             order_column: changedByFilterListType.order_column[0],
             ...filter_gender,
-            ...filter_is_approved,
+            ...filter_test_result,
+            search_filter: changedByFilterListType.search_filter[0],
+            search_text: "",
             current_page: 1,
           },
         },
       });
     }
-  }, [user.list_params.filter_list_type]);
+  }, [report.list_params.filter_list_type]);
 
   return (
     <>
@@ -381,36 +405,30 @@ const List = (props) => {
           }
           locationPathname={locationPathname}
         >
-          <Grid className="customer">
-            <Grid className="table_wrap">
-              <TableHeader columns={tableHeaderColumns} searchComponent />
-              <Grid className="table">
-                <Table
-                  data={user.user_data.data}
-                  columns={tableColumns}
-                  onRowClick={onRowClick}
-                  options={{
-                    pageSize: 10,
-                    paging: true,
-                  }}
-                />
-              </Grid>
-              <TableFooter
-                data={user.user_data.data}
-                count={user.user_data.total_page}
-                page={
-                  user.list_params.current_page
-                    ? user.list_params.current_page
-                    : 1
-                }
-                excel={true}
-                onChangeCallback={onPageNoClick}
-                createButton={false}
-                goToCreate={goToCreate}
-                onExcelDownload={onClickExcelButton}
-              ></TableFooter>
-            </Grid>
-          </Grid>
+          <TableHeader columns={tableHeaderColumns} searchComponent />
+          <Table
+            data={report.user_data.data}
+            columns={tableColumns}
+            onRowClick={onRowClick}
+            options={{
+              pageSize: 10,
+              paging: true,
+            }}
+          />
+          <TableFooter
+            data={report.user_data.data}
+            count={report.user_data.total_page}
+            page={
+              report.list_params.current_page
+                ? report.list_params.current_page
+                : 1
+            }
+            excel={true}
+            onChangeCallback={onPageNoClick}
+            createButton={false}
+            // goToCreate={goToCreate}
+            onExcelDownload={onClickExcelButton}
+          ></TableFooter>
         </Layout>
       </FormProvider>
       <DevTool control={methods.control} />

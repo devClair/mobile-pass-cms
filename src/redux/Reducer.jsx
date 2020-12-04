@@ -168,6 +168,14 @@ const filter_list_type = {
     key: "business_user",
     label: "사업자회원",
   },
+  standard_q: {
+    key: "standard_q",
+    label: "STANDARD Q",
+  },
+  standard_f: {
+    key: "standard_f",
+    label: "STANDARD F",
+  },
 };
 
 const order_column = {
@@ -192,6 +200,7 @@ const order_column = {
     label: "가입일자",
   },
 };
+
 const filter_gender = {
   all: {
     key: "all",
@@ -219,6 +228,25 @@ const filter_is_approved = {
   approved: {
     key: "approved",
     label: "승인완료",
+  },
+};
+
+const filter_test_result = {
+  all: {
+    key: "all",
+    label: "전체",
+  },
+  positive: {
+    key: "positive",
+    label: "Positive",
+  },
+  negative: {
+    key: "negative",
+    label: "Negative",
+  },
+  invalid: {
+    key: "invalid",
+    label: "Invalid",
   },
 };
 
@@ -356,8 +384,12 @@ const list_params_default = {
     current_page: 1,
   },
   report: {
-    filter_list_type: "client_user",
+    filter_list_type: "standard_q",
     order_column: "user_name",
+    filter_gender: "all",
+    filter_test_result: "all",
+    search_filter: "user_name",
+    search_text: "",
     current_page: 1,
   },
   // order_column: "lecture_no",
@@ -519,6 +551,26 @@ const user = {
     current_page: 1,
   },
 };
+const report = {
+  list_params: {
+    ...list_params_default.report,
+  },
+  sort_tab_data: sort_tab_data,
+  search_type_data: search_type_data,
+  // tab_type_data: [
+  //   { key: 0, value: "개인정보처리방침", type: "policy" },
+  //   { key: 1, value: "이용약관", type: "terms" },
+  // ],
+  user_data: {
+    code: "",
+    data: [],
+    currentRow: 0,
+    next_token: "",
+    total_count: 1,
+    total_page: 1,
+    current_page: 1,
+  },
+};
 
 const payment = {
   list_params: list_params_base,
@@ -591,7 +643,7 @@ const INITIAL_STATE = {
   isLoading: 0, // 로딩 상태
   currentAuthUiState: CurrentAuthUiState.SIGN_IN, // 인증 화면 상태
   // currentAuthUiState: CurrentAuthUiState.CHANGE_PASSWORD, // 인증 화면 상태
-  userState: UserState.NOT_SIGN, // 인증 상태
+  userState: UserState.SIGNED, // 인증 상태
   myAuth: {}, // 인증관련 정보
   myUser: {}, // 로그인후 유저 정보
   userData: {
@@ -604,6 +656,7 @@ const INITIAL_STATE = {
   filter_country_code: IsoCode,
   filter_gender: filter_gender,
   filter_is_approved: filter_is_approved,
+  filter_test_result: filter_test_result,
   search_filter: search_filter,
   sort_span_dic: sort_span_dic,
   modalOverflow: true,
@@ -651,7 +704,7 @@ const INITIAL_STATE = {
   lecturer: lecturer,
   lecture: lecture,
   user: user,
-  report: {},
+  report: report,
   payment: payment,
   reg_lecture: reg_lecture,
   adjustment: adjustment,
@@ -756,13 +809,6 @@ export default (state = INITIAL_STATE, { type, payload }) => {
 
     // =========================================================================
     // lecture
-    case "SET_LIST_PARAMS":
-      return produce(state, (draft) => {
-        draft[payload.path].list_params = {
-          ...state[payload.path].list_params,
-          ...payload.list_params,
-        };
-      });
 
     case "LIST_CMS_LECTURES":
       return produce(state, (draft) => {

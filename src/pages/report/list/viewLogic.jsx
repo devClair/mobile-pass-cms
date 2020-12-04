@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 // apiObject
-import { apiObject } from "../../../api";
+import { apiObject, apiObjectMobilePass } from "../../../api";
 import { Storage } from "@psyrenpark/storage";
 import { v4 as uuidv4 } from "uuid";
 
@@ -62,13 +62,13 @@ export const useViewLogic = () => {
           department_info: data.data.items,
         },
       });
-      console.log("LIST_CMS_LECTURES -> success");
+      // console.log("LIST_CMS_LECTURES -> success");
     } catch (error) {
       // alert(error);
-      console.log("Error", error);
-      console.log("Error", error.code);
-      console.log("Error", error.message);
-      console.log("Error", error.response.data);
+      // console.log("Error", error);
+      // console.log("Error", error.code);
+      // console.log("Error", error.message);
+      // console.log("Error", error.response.data);
     }
   };
 
@@ -108,7 +108,6 @@ export const useViewLogic = () => {
 
   useEffect(() => {
     list();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.list_params]);
 
   return { save };

@@ -62,7 +62,7 @@ export const useViewLogic = () => {
           department_info: data.data.items,
         },
       });
-      console.log("LIST_CMS_LECTURES -> success");
+      // console.log("LIST_CMS_LECTURES -> success");
     } catch (error) {
       // alert(error);
       // console.log("Error", error);
@@ -128,9 +128,7 @@ export const useViewLogic = () => {
 
   useEffect(() => {
     list();
-    test();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // test();
   }, [user.list_params]);
 
   return { save };

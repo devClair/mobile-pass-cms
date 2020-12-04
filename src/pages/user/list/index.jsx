@@ -10,7 +10,6 @@ import {
   MenuItem,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Wrapper from "./styles";
 
 // react-router-dom
 import { Route, useHistory } from "react-router-dom";
@@ -55,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const HeaderComponent = (props) => {
-  const reducer = useSelector((state) => state.reducer);
+  const reducer = useSelector((state) => state.reducerMobilePass);
   const user = reducer.user;
   const dispatch = useDispatch();
   const { filter_list_type } = props;
@@ -68,7 +67,7 @@ const HeaderComponent = (props) => {
       current={user.list_params.filter_list_type}
       onChange={(item) => {
         dispatch({
-          type: "SET_HADER_LIST_PARAMS",
+          type: "SET_LIST_PARAMS",
           payload: {
             reducer_type: "user",
             list_params: {
@@ -85,14 +84,10 @@ const HeaderComponent = (props) => {
 const List = (props) => {
   const { match, location } = props;
 
-  useEffect(() => {
-    console.log("render");
-  }, []);
-
   let locationPathname = location.pathname;
   const classes = useStyles();
 
-  const reducer = useSelector((state) => state.reducer);
+  const reducer = useSelector((state) => state.reducerMobilePass);
   const user = reducer.user;
   const dispatch = useDispatch();
   const history = useHistory();
@@ -103,7 +98,7 @@ const List = (props) => {
       user_type: "client_user",
     },
   });
-  const { watch, setValue, handleSubmit, reset } = methods;
+  // const { watch, setValue, handleSubmit, reset } = methods;
 
   const tableColumns = [
     {
@@ -180,7 +175,7 @@ const List = (props) => {
 
   const onChangeOrderColumn = (item) => {
     dispatch({
-      type: "SET_HADER_LIST_PARAMS",
+      type: "SET_LIST_PARAMS",
       payload: {
         reducer_type: "user",
         list_params: {
@@ -194,7 +189,7 @@ const List = (props) => {
 
   const onChangeFilterCountryCode = (item) => {
     dispatch({
-      type: "SET_HADER_LIST_PARAMS",
+      type: "SET_LIST_PARAMS",
       payload: {
         reducer_type: "user",
         list_params: {
@@ -210,7 +205,7 @@ const List = (props) => {
     // console.log({ item });
     // console.log({ state });
     dispatch({
-      type: "SET_HADER_LIST_PARAMS",
+      type: "SET_LIST_PARAMS",
       payload: {
         reducer_type: "user",
         list_params: {
@@ -223,7 +218,7 @@ const List = (props) => {
 
   const onChangeDateColumn = ({ filter_begin_dt, filter_end_dt }) => {
     dispatch({
-      type: "SET_HADER_LIST_PARAMS",
+      type: "SET_LIST_PARAMS",
       payload: {
         reducer_type: "user",
         list_params: {
@@ -237,7 +232,7 @@ const List = (props) => {
 
   const onChangeSearchFilter = (item) => {
     dispatch({
-      type: "SET_HADER_LIST_PARAMS",
+      type: "SET_LIST_PARAMS",
       payload: {
         reducer_type: "user",
         list_params: {
@@ -252,7 +247,7 @@ const List = (props) => {
   const onSubmitSearchText = (params) => {
     // console.log({ value });
     dispatch({
-      type: "SET_HADER_LIST_PARAMS",
+      type: "SET_LIST_PARAMS",
       payload: {
         reducer_type: "user",
         list_params: {
@@ -342,10 +337,10 @@ const List = (props) => {
   };
 
   const onPageNoClick = (n) => {
-    console.log("onPageNoClick -> n", n);
+    // console.log("onPageNoClick -> n", n);
 
     dispatch({
-      type: "SET_HADER_LIST_PARAMS",
+      type: "SET_LIST_PARAMS",
       payload: {
         reducer_type: "user",
         list_params: {
@@ -385,7 +380,7 @@ const List = (props) => {
       });
 
       dispatch({
-        type: "SET_HADER_LIST_PARAMS",
+        type: "SET_LIST_PARAMS",
         payload: {
           reducer_type: "user",
           list_params: {

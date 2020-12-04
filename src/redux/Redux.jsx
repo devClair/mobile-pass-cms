@@ -7,9 +7,11 @@ import {
 } from "redux-devtools-extension";
 
 import reducer from "./Reducer";
+import reducerMobilePass from "./ReducerMobilePass";
 
 const appReducer = combineReducers({
   reducer,
+  reducerMobilePass,
 });
 
 export const store = createStore(appReducer, composeWithDevTools());

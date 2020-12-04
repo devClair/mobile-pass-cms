@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
       paddingBottom: 16,
       background: "white",
       fontWeight: "500",
-      width: 96,
+      width: 104,
     },
     "& fieldset": {
       borderWidth: "2px !important",

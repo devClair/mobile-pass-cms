@@ -1,31 +1,29 @@
 import React, { useEffect, useState, useRef } from "react";
 
-import {
-  Grid,
-  Checkbox,
-  Button,
-  Box,
-  Typography,
-  Select,
-  MenuItem,
-} from "@material-ui/core";
+// @material-ui/core
+import { Checkbox } from "@material-ui/core";
+
+// @material-ui/core/styles
 import { makeStyles } from "@material-ui/core/styles";
 
 // react-router-dom
-import { Route, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 // layout
 import Layout from "../../../layout";
 
-// components
-import Breadcrumb from "../../../components/breadcrumb";
+// components/table-headerV2
 import TableHeader from "../../../components/table-headerV2";
+
+// components/table
 import Table from "../../../components/table";
+
+// components/table-footerV2
 import TableFooter from "../../../components/table-footerV2";
+
+// components/table-header-column
 import {
-  TableHeaderSortSpan,
   SearchComponent,
-  DatePicker,
   SelectComponent,
   ButtonGroupComponent,
 } from "../../../components/table-header-column";
@@ -43,18 +41,14 @@ import ReactExport from "react-data-export";
 import { useForm, FormProvider } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 
-const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
-
 const useStyles = makeStyles((theme) => ({
-  checkbox: {
-    color: "rgba(0, 0, 0, 0.54)!important",
-  },
+  test: { color: "red" },
 }));
 
 const HeaderComponent = (props) => {
   const { reducer_key, filter_list_type } = props;
   const reducer = useSelector((state) => state.reducerMobilePass);
-  const user = reducer[reducer_key];
+  const push = reducer[reducer_key];
   const dispatch = useDispatch();
 
   return (
@@ -62,7 +56,7 @@ const HeaderComponent = (props) => {
       className="selectOutlined"
       variant="outlined"
       items={filter_list_type.map((x) => reducer.filter_list_type[x])}
-      current={user.list_params.filter_list_type}
+      current={push.list_params.filter_list_type}
       onChange={(item) => {
         dispatch({
           type: "SET_LIST_PARAMS",
@@ -81,22 +75,40 @@ const HeaderComponent = (props) => {
 
 const List = (props) => {
   const { match, location } = props;
-  let locationPathname = location.pathname;
+  const locationPathname = location.pathname;
   const reducer_key = locationPathname.split("/")[1];
 
-  const classes = useStyles();
   const reducer = useSelector((state) => state.reducerMobilePass);
-  const user = reducer[reducer_key];
+  const push = reducer[reducer_key];
   const dispatch = useDispatch();
   const history = useHistory();
   const { save } = useViewLogic({ reducer_key: reducer_key });
 
   const methods = useForm({
     defaultValues: {
-      user_type: "client_user",
+      // user_type: "client_user",
     },
   });
   // const { watch, setValue, handleSubmit, reset } = methods;
+
+  const [state, setState] = useState({
+    orderColumn: [],
+    filterColumn: { key: "", value: [] },
+    searchFilter: [],
+    searchText: "",
+  });
+
+  const listParams = [
+    {
+      filter_list_type: "app_push",
+      order_column: ["created_at", "title"],
+      filter_column: {
+        key: "filter_user_type",
+        value: ["all", "client", "business", "doctor"],
+      },
+      search_filter: ["title", "content"],
+    },
+  ];
 
   const tableColumns = [
     {
@@ -140,34 +152,10 @@ const List = (props) => {
       render: (rowData) => (
         <Checkbox
           checked={rowData.lecturer_status === 1 ? true : false}
-          className={classes.checkbox}
-          disabled
+          // className={classes.checkbox}
+          // disabled
         />
       ),
-    },
-  ];
-  const [state, setState] = useState({
-    orderColumn: [],
-    filter_column: { key: "", value: [] },
-    search_filter: [],
-    search_text: "",
-  });
-
-  const listParams = [
-    {
-      filter_list_type: "client_user",
-      order_column: ["user_name", "birth"],
-      filter_column: { key: "filter_gender", value: ["all", "male", "female"] },
-      search_filter: ["user_name", "email", "remarks"],
-    },
-    {
-      filter_list_type: "business_user",
-      order_column: ["business_name", "history", "join_dt"],
-      filter_column: {
-        key: "filter_is_approved",
-        value: ["all", "awating", "approved"],
-      },
-      search_filter: ["business_name", "business_license_number", "remarks"],
     },
   ];
 
@@ -207,21 +195,7 @@ const List = (props) => {
       payload: {
         reducer_key: reducer_key,
         list_params: {
-          [state.filter_column.key]: item.key,
-          current_page: 1,
-        },
-      },
-    });
-  };
-
-  const onChangeDateColumn = ({ filter_begin_dt, filter_end_dt }) => {
-    dispatch({
-      type: "SET_LIST_PARAMS",
-      payload: {
-        reducer_key: reducer_key,
-        list_params: {
-          filter_begin_dt,
-          filter_end_dt,
+          [state.filterColumn.key]: item.key,
           current_page: 1,
         },
       },
@@ -243,8 +217,6 @@ const List = (props) => {
       },
     });
   };
-  // console.log(user.list_params.list_type);
-  // console.log(reducer.order_column.user[user.list_params.list_type]);
 
   const tableHeaderColumns = [
     {
@@ -252,64 +224,47 @@ const List = (props) => {
         <SelectComponent
           className="outlinedCustomHeader"
           variant="outlined"
-          items={state.orderColumn.map((x) => reducer.order_column[x])}
-          current={user.list_params.order_column}
+          items={state.orderColumn.map((x) => {
+            // console.log(reducer.order_column[x]);
+            if (reducer.order_column[x].key === "created_at")
+              return { ...reducer.order_column[x], label: "등록일" };
+            return reducer.order_column[x];
+          })}
+          current={push.list_params.order_column}
           onChange={onChangeOrderColumn}
           label="정렬"
         />
       ),
       position: "left",
     },
-    {
-      component: (
-        <SelectComponent
-          className="outlinedCustomHeader"
-          variant="outlined"
-          items={reducer.filter_country_code}
-          current={user.list_params.filter_country_code}
-          onChange={onChangeFilterCountryCode}
-          label="국가"
-        />
-      ),
-      position: "left",
-    },
+
     {
       component: (
         <ButtonGroupComponent
-          items={state.filter_column.value.map(
-            (x) => reducer[state.filter_column.key][x]
+          items={state.filterColumn.value.map(
+            (x) => reducer[state.filterColumn.key][x]
           )}
-          current={user.list_params[state.filter_column.key]}
+          current={push.list_params[state.filterColumn.key]}
           onClick={onChangeFilterColumn}
         />
       ),
       position: "left",
     },
+
     {
       component: (
         <SearchComponent
-          // search_type_data={user.search_type_data}
-          items={state.search_filter.map((x) => reducer.search_filter[x])}
+          items={state.searchFilter.map((x) => reducer.search_filter[x])}
           reducer_key={reducer_key}
           current={{
-            search_filter: user.list_params.search_filter,
-            search_text: user.list_params.search_text,
+            search_filter: push.list_params.search_filter,
+            search_text: push.list_params.search_text,
           }}
-          // onChange={onChangeSearchFilter}
           onSubmit={onSubmitSearchText}
         />
       ),
       position: "right",
     },
-
-    // {
-    //   component: (
-    //     <DatePicker
-    //       filter_dt={user.list_params.filter_end_dt}
-    //       onChange={onChangeDateColumn}
-    //     />
-    //   ),
-    // },
   ];
 
   const onRowClick = (rowData) => {
@@ -321,7 +276,7 @@ const List = (props) => {
   };
 
   const onPageNoClick = (n) => {
-    // console.log("onPageNoClick -> n", n);
+    console.log("onPageNoClick -> n", n);
 
     dispatch({
       type: "SET_LIST_PARAMS",
@@ -339,25 +294,24 @@ const List = (props) => {
   };
 
   const mounted = useRef(false);
-  useEffect(() => {
-    // console.log("[user.list_params.filter_list_type]");
 
+  useEffect(() => {
     let changedByFilterListType = listParams.find(
-      (x) => x.filter_list_type === user.list_params.filter_list_type
+      (x) => x.filter_list_type === push.list_params.filter_list_type
     );
 
     setState({
       ...state,
       orderColumn: changedByFilterListType.order_column,
-      filter_column: changedByFilterListType.filter_column,
-      search_filter: changedByFilterListType.search_filter,
-      search_text: changedByFilterListType.search_text,
+      filterColumn: changedByFilterListType.filter_column,
+      searchFilter: changedByFilterListType.search_filter,
+      searchText: changedByFilterListType.search_text,
     });
 
     if (!mounted.current) {
       mounted.current = true;
     } else {
-      const [filter_gender, filter_is_approved] = listParams.map((x) => {
+      const [filter_user_type, ...rest_filter_column] = listParams.map((x) => {
         return {
           [x.filter_column.key]: x.filter_column.value[0],
         };
@@ -369,8 +323,7 @@ const List = (props) => {
           reducer_key: reducer_key,
           list_params: {
             order_column: changedByFilterListType.order_column[0],
-            ...filter_gender,
-            ...filter_is_approved,
+            ...filter_user_type,
             search_filter: changedByFilterListType.search_filter[0],
             search_text: "",
             current_page: 1,
@@ -378,7 +331,7 @@ const List = (props) => {
         },
       });
     }
-  }, [user.list_params.filter_list_type]);
+  }, [push.list_params.filter_list_type]);
 
   return (
     <>
@@ -394,7 +347,7 @@ const List = (props) => {
         >
           <TableHeader columns={tableHeaderColumns} searchComponent />
           <Table
-            data={user.table_data.data}
+            data={push.table_data.data}
             columns={tableColumns}
             onRowClick={onRowClick}
             options={{
@@ -403,15 +356,15 @@ const List = (props) => {
             }}
           />
           <TableFooter
-            data={user.table_data.data}
-            count={user.table_data.total_page}
+            data={push.table_data.data}
+            count={push.table_data.total_page}
             page={
-              user.list_params.current_page ? user.list_params.current_page : 1
+              push.list_params.current_page ? push.list_params.current_page : 1
             }
             excel={true}
             onChangeCallback={onPageNoClick}
             createButton={false}
-            goToCreate={goToCreate}
+            // goToCreate={goToCreate}
             onExcelDownload={onClickExcelButton}
           ></TableFooter>
         </Layout>

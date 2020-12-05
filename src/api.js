@@ -2860,7 +2860,8 @@ exports.apiObject = {
 };
 
 exports.apiObjectMobilePass = {
-  getTest: () => {
+  getTest: (params) => {
+    console.log(params);
     return Api.getAxios().get(
       "https://fak0zv2jei.execute-api.ap-northeast-1.amazonaws.com/sp-prod-api-stage/v1/SPCMS_00003"
     );

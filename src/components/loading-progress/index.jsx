@@ -22,7 +22,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SimpleBackdrop() {
   const classes = useStyles();
-  const isLoading = useSelector((state) => Boolean(state.reducer.isLoading));
+  const isLoading = useSelector((state) =>
+    Boolean(state.reducerMobilePass.isLoading)
+  );
 
   // const [open, setOpen] = React.useState(false);
 

@@ -90,7 +90,7 @@ const useTabs = (TabValue, Content) => {
 const TableHeader = (props) => {
   // console.log(window.location.pathname);
   const path = window.location.pathname.split("/")[1];
-  const { columns, searchComponent } = props;
+  const { columns } = props;
 
   // const reducer = useSelector((state) => state.reducer);
   // const dispatch = useDispatch();

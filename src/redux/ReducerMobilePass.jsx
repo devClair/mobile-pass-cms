@@ -20,6 +20,22 @@ const filter_list_type = {
     key: "standard_f",
     label: "STANDARD F",
   },
+  app_push: {
+    key: "app_push",
+    label: "앱푸쉬알림",
+  },
+  id_management: {
+    key: "id_management",
+    label: "ID 관리",
+  },
+  terms_of_service: {
+    key: "terms_of_service",
+    label: "License 사용 규정",
+  },
+  privacy_policy: {
+    key: "privacy_policy",
+    label: "개인정보처리방침",
+  },
 };
 
 const order_column = {
@@ -42,6 +58,18 @@ const order_column = {
   join_dt: {
     key: "join_dt",
     label: "가입일자",
+  },
+  created_at: {
+    key: "created_at",
+    label: "created_at",
+  },
+  title: {
+    key: "title",
+    label: "제목",
+  },
+  medical_institution: {
+    key: "medical_institution",
+    label: "의료기관명",
   },
 };
 
@@ -94,6 +122,25 @@ const filter_test_result = {
   },
 };
 
+const filter_user_type = {
+  all: {
+    key: "all",
+    label: "전체",
+  },
+  client: {
+    key: "client",
+    label: "일반",
+  },
+  business: {
+    key: "business",
+    label: "사업자",
+  },
+  doctor: {
+    key: "doctor",
+    label: "의료진",
+  },
+};
+
 const search_filter = {
   user_name: {
     key: "user_name",
@@ -114,6 +161,22 @@ const search_filter = {
   business_license_number: {
     key: "business_license_number",
     label: "사업자등록번호",
+  },
+  title: {
+    key: "title",
+    label: "제목",
+  },
+  content: {
+    key: "content",
+    label: "내용",
+  },
+  id: {
+    key: "id",
+    label: "ID",
+  },
+  medical_institution: {
+    key: "medical_institution",
+    label: "의료기관명",
   },
 };
 
@@ -137,35 +200,69 @@ const list_params_default = {
     search_text: "",
     current_page: 1,
   },
+  push: {
+    filter_list_type: "app_push",
+    order_column: "created_at",
+    filter_user_type: "all",
+    search_filter: "title",
+    search_text: "",
+    current_page: 1,
+  },
+  id: {
+    filter_list_type: "id_management",
+    order_column: "created_at",
+    search_filter: "id",
+    search_text: "",
+    current_page: 1,
+  },
+  terms: {
+    filter_list_type: "terms_of_service",
+    filter_country_code: "KR",
+  },
+};
+
+const table_data_default = {
+  code: "",
+  data: [],
+  currentRow: 0,
+  next_token: "",
+  total_count: 1,
+  total_page: 1,
+  current_page: 1,
 };
 
 const user = {
   list_params: {
     ...list_params_default.user,
   },
-  user_data: {
-    code: "",
-    data: [],
-    currentRow: 0,
-    next_token: "",
-    total_count: 1,
-    total_page: 1,
-    current_page: 1,
-  },
+  table_data: table_data_default,
 };
 const report = {
   list_params: {
     ...list_params_default.report,
   },
-  user_data: {
-    code: "",
-    data: [],
-    currentRow: 0,
-    next_token: "",
-    total_count: 1,
-    total_page: 1,
-    current_page: 1,
+  table_data: table_data_default,
+};
+
+const push = {
+  list_params: {
+    ...list_params_default.push,
   },
+  table_data: table_data_default,
+};
+
+const id = {
+  list_params: {
+    ...list_params_default.id,
+  },
+  table_data: table_data_default,
+};
+
+const terms = {
+  list_params: {
+    ...list_params_default.terms,
+  },
+  content: "",
 };
 
 const INITIAL_STATE = {
@@ -188,6 +285,7 @@ const INITIAL_STATE = {
   filter_gender: filter_gender,
   filter_is_approved: filter_is_approved,
   filter_test_result: filter_test_result,
+  filter_user_type: filter_user_type,
   search_filter: search_filter,
   acceptedFile: {
     img: "",
@@ -195,6 +293,9 @@ const INITIAL_STATE = {
   },
   user: user,
   report: report,
+  push: push,
+  id: id,
+  terms: terms,
 };
 
 setAutoFreeze(false);
@@ -264,33 +365,46 @@ export default (state = INITIAL_STATE, { type, payload }) => {
         userState: UserState.NOT_SIGN,
       };
 
+    // ReducerMobilePass ==========================================
+    case "LIST_CMS_TABLE_DATA":
+      return produce(state, (draft) => {
+        draft[payload.reducer_key].table_data = {
+          ...payload.table_data,
+        };
+      });
+
     case "SET_LIST_PARAMS":
       return produce(state, (draft) => {
-        draft[payload.reducer_type].list_params = {
-          ...state[payload.reducer_type].list_params,
+        draft[payload.reducer_key].list_params = {
+          ...state[payload.reducer_key].list_params,
           ...payload.list_params,
         };
       });
 
-    // =========================================================================
+    case "GET_TERMS_CONTENT":
+      return {
+        ...state,
+        terms: {
+          ...state.terms,
+          content: payload.content,
+        },
+      };
+
     // user
+    // case "LIST_CMS_USERS":
+    //   return produce(state, (draft) => {
+    //     draft.user.user_data = {
+    //       ...payload.user_data,
+    //     };
+    //   });
 
-    case "LIST_CMS_USERS":
-      return produce(state, (draft) => {
-        draft.user.user_data = {
-          ...payload.user_data,
-        };
-        draft.department_info = payload.department_info;
-      });
-
-    case "GET_CMS_USER":
-      return produce(state, (draft) => {
-        draft.user.user_data = {
-          ...state.user.user_data,
-          ...payload.user_data,
-        };
-        draft.department_info = payload.department_info;
-      });
+    // case "GET_CMS_USER":
+    //   return produce(state, (draft) => {
+    //     draft.user.user_data = {
+    //       ...state.user.user_data,
+    //       ...payload.user_data,
+    //     };
+    //   });
     default:
       return state;
   }

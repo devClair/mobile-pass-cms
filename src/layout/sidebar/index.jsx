@@ -123,7 +123,7 @@ const data = [
     icon: UserImage,
   },
   {
-    key: "policy",
+    key: "terms",
     label: "고객센터",
     icon: UserImage,
   },
@@ -134,7 +134,7 @@ const Sidebar = (props) => {
   const [hover, setHover] = useState(false);
   const classes = useStyles({ drawerWidth: drawerWidth, hover: hover });
   const history = useHistory();
-  const reducer = useSelector((state) => state.reducer);
+  const reducer = useSelector((state) => state.reducerMobilePass);
   const dispatch = useDispatch();
 
   return (
@@ -182,9 +182,9 @@ const Sidebar = (props) => {
               key={x.key}
               onClick={() => {
                 dispatch({
-                  type: "SET_HADER_LIST_PARAMS",
+                  type: "SET_LIST_PARAMS",
                   payload: {
-                    reducer_type: x.key,
+                    reducer_key: x.key,
                     list_params: {
                       ...reducer.list_params_default[x.key],
                     },

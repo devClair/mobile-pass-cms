@@ -13,12 +13,7 @@ const RoutingContainer = (props) => {
 
   return (
     <>
-      {/* <Layout> */}
       <Route exact path={match.path} component={List} />
-      {/* <Route path={`${match.path}/detail/:user_no`} component={Detail} /> */}
-      <Redirect to={`${match.path}`} />
-
-      {/* </Layout> */}
     </>
   );
 };

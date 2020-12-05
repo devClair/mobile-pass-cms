@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
       paddingBottom: 16,
       background: "white",
       fontWeight: "500",
-      width: 104,
+      minWidth: 64,
     },
     "& fieldset": {
       borderWidth: "2px !important",
@@ -425,7 +425,7 @@ export const ButtonGroupComponent = (props) => {
 
 export const SearchComponent = (props) => {
   const classes = useStyles();
-  const reducer = useSelector((state) => state.reducer);
+  const reducer = useSelector((state) => state.reducerMobilePass);
   const {
     items,
     current,

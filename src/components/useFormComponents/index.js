@@ -205,7 +205,6 @@ const useTextFieldStyles = makeStyles((theme) => ({
     height: 78,
     marginTop: 8,
   },
-  // input:-internal-autofill-selected
   autofillCustom: {
     // "&:-internal-autofill-selected": {
     //   backgroundColor: "red !important",
@@ -215,6 +214,9 @@ const useTextFieldStyles = makeStyles((theme) => ({
       // WebkitBoxShadow: "0 0 0 1000px white inset",
       boxShadow: "0 0 0 1000px white inset",
     },
+  },
+  termsInput: {
+    backgroundColor: theme.palette.grey[100],
   },
 }));
 
@@ -265,6 +267,9 @@ export const TextFieldController = (props) => {
     // errorMessage,
     type,
     errors,
+    multiline,
+    rows,
+    noCheck,
   } = props;
   const { control, watch, register, setValue } = useFormContext();
   // console.log({ errors });
@@ -293,7 +298,7 @@ export const TextFieldController = (props) => {
             className: textFieldClasses.autofillCustom,
             onBlur: (e) => {
               // console.log(e.target.value);
-              setValue(name, e.target.value.replace(/(\s*)/g, ""));
+              !noCheck && setValue(name, e.target.value.replace(/(\s*)/g, ""));
             },
             // readOnly: !isEditable,
             // step: step,
@@ -311,8 +316,8 @@ export const TextFieldController = (props) => {
           //   console.log(e);
           // }}
 
-          // multiline={multiline}
-          // rows={rows}
+          multiline={multiline}
+          rows={rows}
           // fullWidth={fullWidth ? true : false}
         />
       }

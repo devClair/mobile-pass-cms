@@ -1,31 +1,29 @@
 import React, { useEffect, useState, useRef } from "react";
 
-import {
-  Grid,
-  Checkbox,
-  Button,
-  Box,
-  Typography,
-  Select,
-  MenuItem,
-} from "@material-ui/core";
+// @material-ui/core
+import { Checkbox } from "@material-ui/core";
+
+// @material-ui/core/styles
 import { makeStyles } from "@material-ui/core/styles";
 
 // react-router-dom
-import { Route, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 // layout
 import Layout from "../../../layout";
 
-// components
-import Breadcrumb from "../../../components/breadcrumb";
+// components/table-headerV2
 import TableHeader from "../../../components/table-headerV2";
+
+// components/table
 import Table from "../../../components/table";
+
+// components/table-footerV2
 import TableFooter from "../../../components/table-footerV2";
+
+// components/table-header-column
 import {
-  TableHeaderSortSpan,
   SearchComponent,
-  DatePicker,
   SelectComponent,
   ButtonGroupComponent,
 } from "../../../components/table-header-column";
@@ -43,17 +41,15 @@ import ReactExport from "react-data-export";
 import { useForm, FormProvider } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 
-const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
-
 const useStyles = makeStyles((theme) => ({
   test: { color: "red" },
 }));
 
 const HeaderComponent = (props) => {
-  const reducer = useSelector((state) => state.reducer);
-  const report = reducer.report;
+  const { reducer_key, filter_list_type } = props;
+  const reducer = useSelector((state) => state.reducerMobilePass);
+  const report = reducer[reducer_key];
   const dispatch = useDispatch();
-  const { filter_list_type } = props;
 
   return (
     <SelectComponent
@@ -63,9 +59,9 @@ const HeaderComponent = (props) => {
       current={report.list_params.filter_list_type}
       onChange={(item) => {
         dispatch({
-          type: "SET_HADER_LIST_PARAMS",
+          type: "SET_LIST_PARAMS",
           payload: {
-            reducer_type: "report",
+            reducer_key: reducer_key,
             list_params: {
               filter_list_type: item.key,
               current_page: 1,
@@ -79,15 +75,14 @@ const HeaderComponent = (props) => {
 
 const List = (props) => {
   const { match, location } = props;
+  const locationPathname = location.pathname;
+  const reducer_key = locationPathname.split("/")[1];
 
-  let locationPathname = location.pathname;
-  const classes = useStyles();
-
-  const reducer = useSelector((state) => state.reducer);
-  const report = reducer.report;
+  const reducer = useSelector((state) => state.reducerMobilePass);
+  const report = reducer[reducer_key];
   const dispatch = useDispatch();
   const history = useHistory();
-  const { save } = useViewLogic();
+  const { save } = useViewLogic({ reducer_key: reducer_key });
 
   const methods = useForm({
     defaultValues: {
@@ -178,9 +173,9 @@ const List = (props) => {
 
   const onChangeOrderColumn = (item) => {
     dispatch({
-      type: "SET_HADER_LIST_PARAMS",
+      type: "SET_LIST_PARAMS",
       payload: {
-        reducer_type: "report",
+        reducer_key: reducer_key,
         list_params: {
           order_column: item.key,
           // order_type,
@@ -192,9 +187,9 @@ const List = (props) => {
 
   const onChangeFilterCountryCode = (item) => {
     dispatch({
-      type: "SET_HADER_LIST_PARAMS",
+      type: "SET_LIST_PARAMS",
       payload: {
-        reducer_type: "report",
+        reducer_key: reducer_key,
         list_params: {
           filter_country_code: item.key,
           // order_type,
@@ -208,9 +203,9 @@ const List = (props) => {
     // console.log({ item });
     // console.log({ state });
     dispatch({
-      type: "SET_HADER_LIST_PARAMS",
+      type: "SET_LIST_PARAMS",
       payload: {
-        reducer_type: "report",
+        reducer_key: reducer_key,
         list_params: {
           [state.filter_column.key]: item.key,
           current_page: 1,
@@ -222,9 +217,9 @@ const List = (props) => {
     // console.log({ item });
     // console.log({ state });
     dispatch({
-      type: "SET_HADER_LIST_PARAMS",
+      type: "SET_LIST_PARAMS",
       payload: {
-        reducer_type: "report",
+        reducer_key: reducer_key,
         list_params: {
           [state.filter_column_2nd.key]: item.key,
           current_page: 1,
@@ -236,9 +231,9 @@ const List = (props) => {
   const onSubmitSearchText = (params) => {
     // console.log({ value });
     dispatch({
-      type: "SET_HADER_LIST_PARAMS",
+      type: "SET_LIST_PARAMS",
       payload: {
-        reducer_type: "report",
+        reducer_key: reducer_key,
         list_params: {
           search_filter: params.search_filter,
           search_text: params.search_text,
@@ -291,28 +286,17 @@ const List = (props) => {
     {
       component: (
         <SearchComponent
-          // search_type_data={report.search_type_data}
           items={state.search_filter.map((x) => reducer.search_filter[x])}
-          reducer_key="report"
+          reducer_key={reducer_key}
           current={{
             search_filter: report.list_params.search_filter,
             search_text: report.list_params.search_text,
           }}
-          // onChange={onChangeSearchFilter}
           onSubmit={onSubmitSearchText}
         />
       ),
       position: "right",
     },
-
-    // {
-    //   component: (
-    //     <DatePicker
-    //       filter_dt={report.list_params.filter_end_dt}
-    //       onChange={onChangeDateColumn}
-    //     />
-    //   ),
-    // },
   ];
 
   const onRowClick = (rowData) => {
@@ -327,9 +311,9 @@ const List = (props) => {
     console.log("onPageNoClick -> n", n);
 
     dispatch({
-      type: "SET_HADER_LIST_PARAMS",
+      type: "SET_LIST_PARAMS",
       payload: {
-        reducer_type: "report",
+        reducer_key: reducer_key,
         list_params: {
           current_page: n,
         },
@@ -378,9 +362,9 @@ const List = (props) => {
       // console.log(rest_filter_column, rest_filter_column_2nd);
 
       dispatch({
-        type: "SET_HADER_LIST_PARAMS",
+        type: "SET_LIST_PARAMS",
         payload: {
-          reducer_type: "report",
+          reducer_key: reducer_key,
           list_params: {
             order_column: changedByFilterListType.order_column[0],
             ...filter_gender,
@@ -400,6 +384,7 @@ const List = (props) => {
         <Layout
           headerComponent={
             <HeaderComponent
+              reducer_key={reducer_key}
               filter_list_type={listParams.map((x) => x.filter_list_type)}
             />
           }
@@ -407,7 +392,7 @@ const List = (props) => {
         >
           <TableHeader columns={tableHeaderColumns} searchComponent />
           <Table
-            data={report.user_data.data}
+            data={report.table_data.data}
             columns={tableColumns}
             onRowClick={onRowClick}
             options={{
@@ -416,8 +401,8 @@ const List = (props) => {
             }}
           />
           <TableFooter
-            data={report.user_data.data}
-            count={report.user_data.total_page}
+            data={report.table_data.data}
+            count={report.table_data.total_page}
             page={
               report.list_params.current_page
                 ? report.list_params.current_page

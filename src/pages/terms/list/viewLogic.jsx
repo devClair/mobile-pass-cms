@@ -9,40 +9,56 @@ import { apiObject, apiObjectMobilePass } from "../../../api";
 // hooks
 import useLoadingFunction from "../../../Hooks/useLoadingFunction";
 
+// date-fns
+import { format } from "date-fns";
+
 export const useViewLogic = (props) => {
   const { reducer_key } = props;
-  const report = useSelector((state) => state.reducerMobilePass[reducer_key]);
+  const terms = useSelector((state) => state.reducerMobilePass[reducer_key]);
   const dispatch = useDispatch();
 
   const loadingFunction = useLoadingFunction();
 
-  const list = async () => {
+  const getTerms = async () => {
+    console.log(terms.list_params);
     try {
       let data = await apiObject.listCmsUsers(
         {
-          ...report.list_params,
+          ...terms.list_params,
         },
         loadingFunction
       );
 
-      const responseListCmsUsers = data;
-      console.log({ responseListCmsUsers });
+      const responseGetTerms = data;
+      console.log({ responseGetTerms });
 
       dispatch({
-        type: "LIST_CMS_TABLE_DATA",
+        type: "GET_TERMS_CONTENT",
         payload: {
           reducer_key: reducer_key,
-          table_data: {
-            code: data.code,
-            data: data.data.items,
-            next_token: data.data.next_token,
-            total_count: data.data.total_count,
-            total_page: data.data.total_page,
-            current_page: data.data.current_page,
-          },
+          // content: data.content,
+          content: `content data : ${format(
+            new Date(),
+            "yyyy-MM-dd hh:mm:ss"
+          )}`,
         },
       });
       // console.log("LIST_CMS_LECTURES -> success");
+    } catch (error) {
+      // alert(error);
+      console.log("Error", error);
+      // console.log("Error", error.code);
+      // console.log("Error", error.message);
+      // console.log("Error", error.response.data);
+    }
+  };
+
+  const updateTerms = async (params) => {
+    console.log({ params });
+    try {
+      // const responseGetTest = await apiObjectMobilePass.getTest(params);
+      // console.log({ responseGetTest });
+      getTerms(); // 혹은 response 값으로 dispatch
     } catch (error) {
       // alert(error);
       console.log("Error", error);
@@ -58,7 +74,7 @@ export const useViewLogic = (props) => {
     try {
       let data = await apiObject.saveCmsUsers(
         {
-          ...report.list_params,
+          ...terms.list_params,
         },
         loadingFunction
       );
@@ -78,8 +94,8 @@ export const useViewLogic = (props) => {
   };
 
   useEffect(() => {
-    list();
-  }, [report.list_params]);
+    getTerms();
+  }, [terms.list_params]);
 
-  return { save };
+  return { updateTerms, save };
 };

@@ -703,8 +703,8 @@ const INITIAL_STATE = {
   content: content,
   lecturer: lecturer,
   lecture: lecture,
-  user: user,
-  report: report,
+  // user: user,
+  // report: report,
   payment: payment,
   reg_lecture: reg_lecture,
   adjustment: adjustment,
@@ -982,22 +982,22 @@ export default (state = INITIAL_STATE, { type, payload }) => {
     // =========================================================================
     // user
 
-    case "LIST_CMS_USERS":
-      return produce(state, (draft) => {
-        draft.user.user_data = {
-          ...payload.user_data,
-        };
-        draft.department_info = payload.department_info;
-      });
+    // case "LIST_CMS_USERS":
+    //   return produce(state, (draft) => {
+    //     draft.user.user_data = {
+    //       ...payload.user_data,
+    //     };
+    //     draft.department_info = payload.department_info;
+    //   });
 
-    case "GET_CMS_USER":
-      return produce(state, (draft) => {
-        draft.user.user_data = {
-          ...state.user.user_data,
-          ...payload.user_data,
-        };
-        draft.department_info = payload.department_info;
-      });
+    // case "GET_CMS_USER":
+    //   return produce(state, (draft) => {
+    //     draft.user.user_data = {
+    //       ...state.user.user_data,
+    //       ...payload.user_data,
+    //     };
+    //     draft.department_info = payload.department_info;
+    //   });
 
     // =========================================================================
     // payment

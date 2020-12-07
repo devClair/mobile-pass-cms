@@ -56,8 +56,11 @@ const theme = createMuiTheme({
       },
     },
     MuiTypography: {
-      colorTextSecondary: {
+      colorTextPrimary: {
         color: "white",
+      },
+      colorTextSecondary: {
+        color: "#999999",
       },
     },
     MuiButton: {

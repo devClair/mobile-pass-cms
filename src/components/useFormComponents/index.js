@@ -200,6 +200,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const useSelectStyles = makeStyles((theme) => ({
+  outlinedCustom: {
+    "& .MuiOutlinedInput-input": {
+      paddingTop: 10,
+      paddingBottom: 11,
+      background: "white",
+      minWidth: 64,
+      // fontWeight: "500",
+    },
+    "& fieldset": {
+      // border: "none",
+    },
+  },
+}));
+
 const useTextFieldStyles = makeStyles((theme) => ({
   accountInput: {
     color: theme.palette.primary.main,
@@ -219,40 +234,60 @@ const useTextFieldStyles = makeStyles((theme) => ({
   termsInput: {
     backgroundColor: theme.palette.grey[100],
   },
+  outlinedCustom: {
+    "& .MuiOutlinedInput-input": {
+      paddingTop: 10,
+      paddingBottom: 11,
+      // background: "white",
+      minWidth: 64,
+    },
+    "& fieldset": {
+      // border: "none",
+    },
+  },
 }));
 
 export const SelectController = (props) => {
-  const classes = useStyles();
+  const selectClasses = useSelectStyles();
 
   const {
     // isEditable,
     menuItems,
     name,
+    className,
+    errors,
+    placeholder,
   } = props;
   const { control, reset, watch } = useFormContext();
 
   return (
     <Controller
       as={
-        <FormControl className={classes.formControl}>
-          <InputLabel id="demo-simple-select-label">
-            {menuItems[0].key}
-          </InputLabel>
-
-          <Select className={classes.selectOutlined} variant="outlined">
-            {menuItems?.map((x) => {
-              return (
-                <MenuItem key={x.key} value={x.value}>
-                  {x.key}
-                </MenuItem>
-              );
-            })}
-          </Select>
-        </FormControl>
+        <Select
+          className={selectClasses[className]}
+          variant="outlined"
+          displayEmpty
+        >
+          {placeholder && (
+            <MenuItem value="" disabled>
+              <Box color="grey.500">{placeholder}</Box>
+            </MenuItem>
+          )}
+          {menuItems?.map((x) => {
+            return (
+              <MenuItem key={x.key} value={x.value}>
+                {x.key}
+              </MenuItem>
+            );
+          })}
+        </Select>
       }
       name={name}
       control={control}
-      defaultValue={""}
+      error={errors[name]}
+      rules={{
+        required: true,
+      }}
     />
     // <></>
   );
@@ -335,6 +370,8 @@ export const TextFieldController = (props) => {
     ></Controller>
   );
 };
+
+export const HookFormContainer = (props) => {};
 
 export const TimeInputComponent = (props) => {
   const { isEditable, value, onChange, min, max } = props;

@@ -347,7 +347,7 @@ const InstructorDetailComponent = (props) => {
           </Grid>
           <Grid item>
             {isEditable && (
-              <Typography color="textSecondary">{`※ 체크시 메인화면에 노출됩니다`}</Typography>
+              <Typography color="textPrimary">{`※ 체크시 메인화면에 노출됩니다`}</Typography>
             )}
           </Grid>
         </Grid>

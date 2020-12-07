@@ -181,7 +181,7 @@ export const TableHeaderSortSpan = (props) => {
         <Typography
           display="inline"
           variant={order_column === order_key ? "h6" : undefined}
-          color="textSecondary"
+          color="textPrimary"
           onClick={onClick}
         >
           {order_data.value}

@@ -473,7 +473,7 @@ const CreateComponent = (props) => {
             setState({ ...state, best_bare_state: e.target.checked });
           }}
           message={
-            <Typography color="textSecondary">
+            <Typography color="textPrimary">
               ※ 체크 시 Best 강의에 노출됩니다
             </Typography>
           }
@@ -561,7 +561,7 @@ const CreateComponent = (props) => {
           </Grid>
           <Grid item>
             <Box pr={2}>
-              <Typography color="textSecondary">
+              <Typography color="textPrimary">
                 {isEditable && `※ 설정한 비율만큼 강사에게 지급됩니다`}
               </Typography>
             </Box>
@@ -704,7 +704,7 @@ const CreateComponent = (props) => {
             setState({ ...state, lecture_state: e.target.checked });
           }}
           message={
-            <Typography color="textSecondary">
+            <Typography color="textPrimary">
               ※ 체크 시 강의가 승인됩니다
             </Typography>
           }

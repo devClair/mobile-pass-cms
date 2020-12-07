@@ -153,12 +153,12 @@ const Sidebar = (props) => {
         // alignItems="center"
       >
         <Grid item className={classes.logoContainer}>
-          <Typography variant="body1" color="textSecondary" align="center">
+          <Typography variant="body1" color="textPrimary" align="center">
             STANDARD
           </Typography>
           <Typography
             variant="body1"
-            color="textSecondary"
+            color="textPrimary"
             align="center"
             className="logoBottom"
           >
@@ -216,7 +216,7 @@ const Sidebar = (props) => {
                   <Typography
                     variant="body2"
                     align="center"
-                    color="textSecondary"
+                    color="textPrimary"
                   >
                     {x.label}
                   </Typography>

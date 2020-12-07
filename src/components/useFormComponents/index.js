@@ -19,6 +19,8 @@ import {
   IconButton,
   Button,
   FormControl,
+  FormControlLabel,
+  InputLabel,
   Select,
   MenuItem,
   Checkbox,
@@ -26,7 +28,6 @@ import {
   Typography,
   Box,
   Slider,
-  FormControlLabel,
   Chip,
   InputAdornment,
 } from "@material-ui/core";
@@ -220,7 +221,7 @@ const useTextFieldStyles = makeStyles((theme) => ({
   },
 }));
 
-export const SelectComponent = (props) => {
+export const SelectController = (props) => {
   const classes = useStyles();
 
   const {
@@ -233,19 +234,21 @@ export const SelectComponent = (props) => {
   return (
     <Controller
       as={
-        <Select
-          className={classes.selectOutlined}
-          variant="outlined"
-          // disabled={!isEditable}
-        >
-          {menuItems?.map((x) => {
-            return (
-              <MenuItem key={x.key} value={x.value}>
-                {x.key}
-              </MenuItem>
-            );
-          })}
-        </Select>
+        <FormControl className={classes.formControl}>
+          <InputLabel id="demo-simple-select-label">
+            {menuItems[0].key}
+          </InputLabel>
+
+          <Select className={classes.selectOutlined} variant="outlined">
+            {menuItems?.map((x) => {
+              return (
+                <MenuItem key={x.key} value={x.value}>
+                  {x.key}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
       }
       name={name}
       control={control}

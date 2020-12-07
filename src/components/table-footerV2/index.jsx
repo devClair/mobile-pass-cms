@@ -134,7 +134,7 @@ const TableFooter = (props) => {
             startIcon={<EditOutlinedIcon />}
             onClick={goToCreate}
           >
-            작성하기
+            {createButton}
           </Button>
         )}
         {goBackButton && (

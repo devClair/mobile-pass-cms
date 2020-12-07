@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 
 // @material-ui/core
-import { Checkbox } from "@material-ui/core";
+import { Checkbox, Typography } from "@material-ui/core";
 
 // @material-ui/core/styles
 import { makeStyles } from "@material-ui/core/styles";
@@ -73,7 +73,7 @@ const HeaderComponent = (props) => {
   );
 };
 
-const List = (props) => {
+const Detail = (props) => {
   const { match, location } = props;
   const locationPathname = location.pathname;
   const reducer_key = locationPathname.split("/")[1];
@@ -272,7 +272,7 @@ const List = (props) => {
   };
 
   const goToCreate = () => {
-    history.push(`${match.path}/create`);
+    history.push(`${match.url}/create`);
   };
 
   const onPageNoClick = (n) => {
@@ -346,15 +346,9 @@ const List = (props) => {
           locationPathname={locationPathname}
         >
           <TableHeader columns={tableHeaderColumns} searchComponent />
-          <Table
-            data={push.table_data.data}
-            columns={tableColumns}
-            onRowClick={onRowClick}
-            options={{
-              pageSize: 10,
-              paging: true,
-            }}
-          />
+
+          <Typography variant="h1">Detail</Typography>
+
           <TableFooter
             data={push.table_data.data}
             count={push.table_data.total_page}
@@ -363,8 +357,8 @@ const List = (props) => {
             }
             excel={true}
             onChangeCallback={onPageNoClick}
-            createButton="푸쉬등록"
-            goToCreate={goToCreate}
+            createButton={false}
+            // goToCreate={goToCreate}
             onExcelDownload={onClickExcelButton}
           ></TableFooter>
         </Layout>
@@ -373,4 +367,4 @@ const List = (props) => {
     </>
   );
 };
-export default List;
+export default Detail;
